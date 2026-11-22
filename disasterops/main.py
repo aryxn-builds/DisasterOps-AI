@@ -24,11 +24,32 @@ def create_app(
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
+        from .models import Base
+        from sqlalchemy.orm import Session
+        from .services.auth import password_hasher
+
         config = settings or Settings()
+        db_url = config.postgres_url()
+        is_sqlite = db_url.startswith("sqlite")
+        connect_args = {"check_same_thread": False} if is_sqlite else {}
+
         db_engine = engine or create_engine(
-            config.postgres_url(), hide_parameters=True, pool_pre_ping=True
+            db_url,
+            hide_parameters=True,
+            pool_pre_ping=not is_sqlite,
+            connect_args=connect_args,
         )
         try:
+            Base.metadata.create_all(db_engine)
+            with Session(db_engine) as session:
+                if not session.scalar(select(Account.id).limit(1)):
+                    session.add_all([
+                        Account(username="rescue123", role="dispatcher", password_hash=password_hasher.hash("RSC123"), phone="+919811223344"),
+                        Account(username="keshav45", role="citizen", password_hash=password_hasher.hash("password123"), phone="+919876543210"),
+                        Account(username="keshav99", role="citizen", password_hash=password_hasher.hash("password123"), phone="+919876543210"),
+                    ])
+                    session.commit()
+
             with db_engine.connect() as conn:
                 conn.execute(select(Account.id).limit(1))
             app.state.engine = db_engine

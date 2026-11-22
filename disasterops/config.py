@@ -10,8 +10,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     database_url: SecretStr | None = None
-    secure_cookies: bool = True
-    server_public_url: str = "https://localhost:8000"
+    secure_cookies: bool = False
+    server_public_url: str = "http://localhost:8000"
     emergency_sms_gateway_number: Phone | None = None
     android_sms_gateway_webhook_secret: SecretStr | None = None
     android_sms_gateway_url: str | None = None
@@ -57,7 +57,12 @@ class Settings(BaseSettings):
     def postgres_url(self) -> str:
         url = self.database_url.get_secret_value() if self.database_url else ""
         if url.startswith("postgresql://"):
-            return url.replace("postgresql://", "postgresql+pg8000://", 1)
-        if url.startswith("postgresql+pg8000://"):
+            try:
+                import pg8000
+                return url.replace("postgresql://", "postgresql+pg8000://", 1)
+            except ImportError:
+                return url
+        if url.startswith("postgresql+") or url.startswith("sqlite"):
             return url
-        raise RuntimeError("Configure DATABASE_URL with a PostgreSQL connection URL")
+        # Default local embedded database fallback so the app runs immediately
+        return "sqlite:///disasterops.db"

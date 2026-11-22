@@ -74,3 +74,5 @@ npx tailwindcss@3.4.17 -i frontend.css -o styles.css --content './{index.html,ap
 ```
 
 Phase 0 is intended for controlled research use. Public exposure needs infrastructure rate limits for authentication and ingestion, a retention policy for sensitive records, database backup and restore procedures, and end-to-end testing with the intended Android gateway and phones. Keep access logs and error monitoring free of request bodies and share tokens.
+
+working member - Kehshav and Aryan

@@ -4,7 +4,12 @@ from datetime import timedelta
 from typing import Annotated
 
 from argon2 import PasswordHasher
-from argon2.exceptions import InvalidHashError, VerificationError
+from argon2.exceptions import VerificationError
+
+try:
+    from argon2.exceptions import InvalidHashError
+except ImportError:  # older argon2-cffi versions
+    from argon2.exceptions import InvalidHash as InvalidHashError
 from fastapi import Depends, HTTPException, Request
 from sqlalchemy import delete, select
 

@@ -49,6 +49,7 @@ node_modules/
 *.log
 *.sqlite
 *.sqlite3
+*.db
 /pgdata/
 /backups/
 /playwright-report/
