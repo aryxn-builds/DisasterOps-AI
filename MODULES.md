@@ -1,6 +1,6 @@
 # DisasterOps AI — System Modules Specification
 
-This document provides the architectural and functional specification for the core modules of the **DisasterOps AI** platform (Agentic AI-Driven Disaster Response and Emergency Resource Allocation).
+This is the historical research concept, retained for its candidate datasets, mathematical formulations, and examples. All interfaces, numeric thresholds, automated behaviors, and provider options below are historical proposals. The [module specifications](docs/MODULE_SPECIFICATIONS.md) own current and target module contracts, and the [guardrails](docs/GUARDRAILS.md) govern review and execution. The current SMS adapter is Android SMS Gateway, and the example provider, PIN access and automatic edge deactivation below are not approved designs.
 
 ```mermaid
 flowchart TD
@@ -11,7 +11,7 @@ flowchart TD
         Aero["Sentinel Satellites & YOLOv8 + SAHI Drones"]
     end
 
-    subgraph M5["Module 5: Report Verification & Automatic Action"]
+    subgraph M5["Module 5: Proposed Report Review Assistance"]
         Dedup["Duplicate Clustering"]
         LocCheck["Kinematic & Boundary Plausibility"]
         Trust["Source Trust & OTP"]
@@ -211,10 +211,10 @@ The solver triggers incremental re-optimization upon:
 
 ---
 
-## Module 5: Report Verification & Automated Action
+## Module 5: Proposed Report Review Assistance
 
 ### 1. Purpose
-Act as an automated intelligence gate between raw public signal ingestion (Module 1) and operational dispatch (Module 4), filtering out hallucinations, duplicate alarms, spam, and malicious misinformation before teams are deployed.
+Present contextual signals to human reviewers while retaining every SOS. Reviewers assess potentially duplicate or misleading reports and decide whether to open an incident.
 
 ```mermaid
 flowchart LR
@@ -224,10 +224,7 @@ flowchart LR
     Trust --> NLP["4. NLP Semantic Validation"]
     NLP --> Img["5. Image Forensics & Cross-Check"]
     Img --> Corrob["6. Multi-Source Corroboration"]
-    Corrob --> Verdict{"Confidence Score"}
-    Verdict -->|Score >= 0.80| AutoDispatch["Auto-Verified -> Priority Queue"]
-    Verdict -->|0.50 <= Score < 0.80| ReviewQueue["Human Review Flag"]
-    Verdict -->|Score < 0.50| Quarantine["Quarantine / Drop"]
+    Corrob --> ReviewQueue["Human review queue with uncertainty indicators"]
 ```
 
 ### 2. Multi-Signal Verification Pipeline
@@ -241,10 +238,9 @@ flowchart LR
 | **5. Image Forensics** | Verify submitted disaster photos. | EXIF metadata extraction (timestamp/GPS match), **perceptual hashing (pHash)** against web scrape databases to detect recycled images, and CLIP text-image alignment. | AI-generated detectors treated as weak indicators; recycled disaster imagery flagged immediately. |
 | **6. Corroboration Engine** | Synthesize external multi-modal confirmation. | Spatial-temporal cross-referencing against nearby independent reports, drone YOLO detections, or satellite SAR flood boundaries. | Corroboration multiplier significantly boosts priority confidence. |
 
-### 3. Automated Action Matrix
-* **Confidence $\ge 0.80$ (High):** Verified automatically; passed immediately to Module 3 (road closures) and Module 4 (rescue prioritization).
-* **$0.50 \le \text{Confidence} < 0.80$ (Medium):** Routed to the Field Dispatcher's human verification queue with pre-highlighted anomaly markers.
-* **Confidence $< 0.50$ (Low / Anomalous):** Automatically quarantined into the audit log with no rescue resource commitment.
+### 3. Human review
+
+Every report remains available for review, independent of confidence. Any future scoring is advisory. A dispatcher decides whether to open an incident and assign a responder, and the assigned responder confirms it.
 
 ---
 

@@ -23,6 +23,11 @@ share/python-wheels/
 .installed.cfg
 *.egg
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
 
 # Virtual Environments
 venv/
@@ -31,9 +36,23 @@ ENV/
 
 # Environment Variables & Secrets (Keep private!)
 .env
-.env.local
+.env.*
+!.env.example
 *.pem
 *.key
+*.p12
+*.pfx
+
+# Local dependencies, runtime data and test output
+node_modules/
+.uv-cache/
+*.log
+*.sqlite
+*.sqlite3
+/pgdata/
+/backups/
+/playwright-report/
+/test-results/
 
 # IDE & OS
 .vscode/

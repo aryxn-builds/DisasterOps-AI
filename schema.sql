@@ -1,5 +1,5 @@
--- DisasterOps AI: PostgreSQL & Supabase Schema Definition
--- Run this in your Supabase SQL Editor or psql to initialize the emergency database.
+-- Historical prototype schema, retained for reference only.
+-- For Phase 0, initialize a fresh database with Alembic migrations.
 
 -- 1. CITIZENS TABLE (Registered Users)
 CREATE TABLE IF NOT EXISTS citizens (
