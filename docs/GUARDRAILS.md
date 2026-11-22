@@ -1,0 +1,14 @@
+# Project guardrails
+
+MUST is required. SHOULD is the default with a documented reason for exceptions. MAY is optional. [Security](SECURITY.md) assesses the current controls and gaps.
+
+| Area | MUST | SHOULD / MAY |
+| --- | --- | --- |
+| Architecture | Keep ingress, verification, planning, and execution distinct. Avoid circular imports. Preserve interface and schema contracts or make authorized, versioned changes. | SHOULD isolate reusable domain rules from HTTP. MAY extract a service with measured scaling or trust-boundary justification and an ADR. |
+| Emergency safety | Preserve potentially critical reports for review. Missing or stale status means unknown. Label simulation, source and uncertainty. Human approval and accountable acknowledgments are required for any future operational action. Never automate real dispatch, use unsuitable destinations, allocate unavailable resources, or silently consume stale capacity. | SHOULD record evidence versions, actor, decision and reason. MAY propose alternatives when inputs are missing. |
+| AI | Restrict models to allowlisted tools, validated structured I/O and least privilege. Treat report content as untrusted data. Verify values against sources. Deterministic services enforce hard constraints. | SHOULD use bounded retries/timeouts, record redacted decisions and tool outcomes, and fall back to human review or deterministic calculation. MAY summarize evidence with citations and uncertainty. |
+| Privacy | Minimize precision, collection, retention and visibility. Use role and object checks, TLS on non-loopback links, protected storage and backups, secrets outside source, signed fresh webhooks and persisted replay keys. | SHOULD approve a retention/deletion schedule and record sensitive access without raw payloads. MAY use coarse aggregates for research with reidentification review. |
+| Abuse and errors | Validate type, size, range, and ownership at boundaries. Keep secrets and personal or medical data out of logs, prompts and exports. Production exposure requires rate limits, secure defaults, and auditability. | SHOULD fail with actionable redacted errors, keep user-visible receipts honest, and alert on sustained abuse. |
+| Development | Preserve user edits. Get explicit authorization for commit, push, deployment and production changes. Keep migrations additive where possible and test them before use. Document dependency, schema and external-API effects. | SHOULD use isolated test databases, synthetic fixtures, and small PRs. MAY introduce an external dependency after checking licensing, need, data flows, and recovery. |
+
+Only approved integrations may receive data. Never include real credentials in examples, and use explicit opt-in for any external tests. See [Engineering standards](../DEVELOPMENT_GUIDELINES.md) and [Deployment](DEPLOYMENT.md).

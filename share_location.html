@@ -18,19 +18,20 @@
 </head>
 <body>
 <main>
-  <h1>🚨 DisasterOps Rescue</h1>
-  <p>A rescue team has asked for your location. Tap the button and choose <b>Allow</b> when your phone asks.</p>
+  <h1>DisasterOps location sharing</h1>
+  <p>A project operator requested your location. To share it, tap the button and choose <b>Allow</b> when your phone asks.</p>
   <button id="shareBtn">📍 Share my location</button>
   <div id="msg"></div>
 </main>
 <script>
-  const token = new URLSearchParams(location.search).get('t');
+  const token = new URLSearchParams(location.hash.slice(1)).get('t');
+  history.replaceState(null, '', location.pathname);
   const btn = document.getElementById('shareBtn');
   const msg = document.getElementById('msg');
 
   function show(text, cls) { msg.className = cls || ''; msg.textContent = text; }
 
-  if (!token) { btn.disabled = true; show('This link is incomplete. Ask the rescue team to resend it.', 'err'); }
+  if (!token) { btn.disabled = true; show('This link is incomplete. Ask the project operator for a new link.', 'err'); }
 
   btn.addEventListener('click', () => {
     if (!navigator.geolocation) { show('Your browser cannot read location.', 'err'); return; }
@@ -46,11 +47,11 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token, latitude, longitude, accuracy_meters: accuracy })
         });
-        if (!res.ok) throw new Error((await res.json()).detail || res.status);
-        show(`✅ Location sent to the rescue team.\n${latitude.toFixed(5)}, ${longitude.toFixed(5)} (±${Math.round(accuracy)} m)`, 'ok');
+        if (!res.ok || (await res.json()).status !== 'received') throw new Error();
+        show('DisasterOps received your location.', 'ok');
       } catch (e) {
         btn.disabled = false;
-        show(`Could not send (no internet?). Send this SMS instead:\nDISASTEROPS SOS Lat: ${latitude.toFixed(5)} Lon: ${longitude.toFixed(5)}`, 'err');
+        show('Location receipt could not be confirmed. Retry or ask the project operator for a new link.', 'err');
       }
     }, err => {
       btn.disabled = false;
