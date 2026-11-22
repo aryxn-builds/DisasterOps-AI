@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DisasterOps AI — Autonomous Disaster Response & Rescue Command</title>
-  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <title>DisasterOps AI — Disaster Response Research</title>
+  <link rel="stylesheet" href="/styles.css">
   <!-- Leaflet CSS & JS for Rescue Command Map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -110,10 +110,10 @@
           <span class="font-bold text-base sm:text-lg tracking-tight text-white">DisasterOps AI</span>
           <span id="navLiveTag"
             class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            ● Cloud Active
+            Research prototype
           </span>
         </div>
-        <p class="text-[10px] text-slate-400 hidden sm:block">Agentic Emergency Response & Autonomous Rescue Map</p>
+        <p class="text-[10px] text-slate-400 hidden sm:block">Disaster response research</p>
       </div>
     </div>
 
@@ -136,9 +136,7 @@
     <div id="navRescueBadge"
       class="hidden flex items-center gap-2 bg-red-950/50 border border-red-500/40 px-3 py-1 rounded-xl text-xs">
       <span class="flex h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
-      <span class="font-bold text-red-300 font-mono">RESCUE COMMAND: @rescue123</span>
-      <span class="text-slate-500">|</span>
-      <span id="nav5MinSyncTimer" class="text-slate-300 font-mono text-[11px]">Sync: 04:59</span>
+      <span id="staffRole" class="font-bold text-red-300 font-mono"></span>
     </div>
 
     <!-- Right: Auth Action / Profile / Rescue Switch -->
@@ -178,13 +176,7 @@
           <div class="p-2.5 border-b border-slate-800">
             <p class="text-[10px] uppercase font-bold text-slate-400">Citizen Profile</p>
             <p id="menuUsername" class="font-bold text-white text-sm">@username</p>
-            <p id="menuPhone" class="text-[11px] text-slate-400 font-mono mt-0.5">+91 XXXXXXXXXX</p>
           </div>
-          <button type="button" onclick="openProfileModal()"
-            class="w-full text-left px-3 py-2 rounded-lg hover:bg-slate-800 text-blue-300 font-medium flex items-center gap-2">
-            <span>⚙️</span>
-            <span>Update Parents & Village ID</span>
-          </button>
           <button type="button" onclick="handleLogout()"
             class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-950/40 text-red-400 font-medium flex items-center gap-2">
             <span>🚪</span>
@@ -212,16 +204,15 @@
     <div
       class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-300 text-xs">
       <span class="flex h-2 w-2 rounded-full bg-blue-400 animate-ping"></span>
-      <span>Autonomous Crisis Coordination & Scheduled Rescue Sync</span>
+      <span>Research prototype</span>
     </div>
 
     <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-3xl leading-tight">
-      Shake-to-SOS & Autonomous Rescue Fleet Dispatch
+      SOS reporting and coordination
     </h1>
 
     <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed">
-      Shake your phone device to immediately emit a distress signal with automatic offline SMS fallback and live
-      coordinates sent to the rescue department map.
+      Submit SOS reports for review by project operators. This research prototype has no emergency-service connection.
     </p>
 
     <!-- Call to Actions -->
@@ -237,12 +228,13 @@
       </button>
     </div>
 
+    <button type="button" onclick="triggerOfflineSMSFallback('SOS')" class="text-sm text-blue-300 underline">Prepare an SOS by SMS</button>
+
     <!-- Key highlights -->
     <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-left max-w-4xl pt-8">
       <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
         <p class="text-xs font-bold text-amber-400">📱 Shake-to-SOS</p>
-        <p class="text-[11px] text-slate-400 mt-1">Vigorously shake your phone device to trigger immediate distress
-          alarm.</p>
+        <p class="text-[11px] text-slate-400 mt-1">Enable motion detection to open an SOS confirmation prompt.</p>
       </div>
       <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
         <p class="text-xs font-bold text-emerald-400">💬 Offline SMS Fallback</p>
@@ -250,21 +242,19 @@
           GPS coordinates.</p>
       </div>
       <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-        <p class="text-xs font-bold text-blue-400">⏱️ 5-Min Rescue Sync</p>
-        <p class="text-[11px] text-slate-400 mt-1">FastAPI background worker batches live victim coordinates every 5
-          minutes.</p>
+        <p class="text-xs font-bold text-blue-400">Manual assignments</p>
+        <p class="text-[11px] text-slate-400 mt-1">An authorized dispatcher assigns a responder, who confirms the assignment.</p>
       </div>
       <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
-        <p class="text-xs font-bold text-red-400">🗺️ 4-Color Rescue Map</p>
-        <p class="text-[11px] text-slate-400 mt-1">🔴 Danger, 🟡 Unresponsive, 🟢 Safe, and ⚪ Unregistered Find My
-          Device pings.</p>
+        <p class="text-xs font-bold text-red-400">🗺️ SOS map</p>
+        <p class="text-[11px] text-slate-400 mt-1">Authorized operators can view SOS locations when coordinates are available.</p>
       </div>
     </div>
   </main>
 
 
   <!-- ============================================================== -->
-  <!-- VIEW 2: CITIZEN DEFAULT DASHBOARD (OPENS BY DEFAULT FOR USERS) -->
+  <!-- VIEW 2: AUTHENTICATED CITIZEN DASHBOARD                        -->
   <!-- ============================================================== -->
   <main id="view-citizen-dashboard" class="flex-1 hidden px-4 sm:px-8 py-6 max-w-4xl mx-auto w-full space-y-6">
 
@@ -282,16 +272,16 @@
           <div>
             <div class="flex items-center gap-2">
               <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Current Status:</span>
-              <strong id="statusTitle" class="text-base font-extrabold text-emerald-400">I AM SAFE</strong>
+              <strong id="statusTitle" class="text-base font-extrabold text-emerald-400">No check-in recorded</strong>
             </div>
             <p id="statusDesc" class="text-xs text-slate-300 mt-0.5">
-              Status recorded as Safe in emergency registry. Auto-expires in 6 hours.
+              Your check-in is separate from any SOS reports.
             </p>
           </div>
         </div>
         <div class="text-left sm:text-right font-mono text-xs text-slate-400">
-          <span class="block text-[10px] uppercase text-slate-500">Last Broadcast:</span>
-          <span id="statusTimestamp" class="text-slate-200">Just now</span>
+          <span class="block text-[10px] uppercase text-slate-500">Last check-in:</span>
+          <span id="statusTimestamp" class="text-slate-200">—</span>
         </div>
       </div>
 
@@ -300,14 +290,13 @@
         <div class="flex items-center gap-2.5">
           <span class="text-lg">📳</span>
           <div>
-            <span class="font-bold text-white">Shake-to-SOS Sensor Active</span>
-            <p class="text-[11px] text-slate-400">Shake this phone vigorously 3 times to trigger immediate distress
-              alarm.</p>
+            <span class="font-bold text-white">Shake-to-SOS</span>
+            <p class="text-[11px] text-slate-400">Enable motion detection to prompt before sending an SOS.</p>
           </div>
         </div>
-        <button type="button" onclick="simulateShakeEvent()"
+        <button type="button" id="shakeButton" onclick="enableShake()"
           class="px-2.5 py-1 rounded bg-blue-600/30 hover:bg-blue-600/50 text-blue-200 border border-blue-500/40 text-[11px] font-mono whitespace-nowrap">
-          Test Shake Trigger
+          Enable shake detection
         </button>
       </div>
 
@@ -323,7 +312,7 @@
             </span>
             <span
               class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-black/30 border border-white/20">
-              Immediate Rescue
+              SOS report
             </span>
           </div>
 
@@ -332,7 +321,7 @@
               NEED HELP
             </h2>
             <p class="text-xs text-red-100/90 leading-relaxed">
-              Dispatches live GPS coordinates to Rescue Command Map (Red Dot) & sends batch to rescue123.
+              Submits an SOS for review, with GPS if available.
             </p>
           </div>
         </button>
@@ -355,20 +344,26 @@
               I AM SAFE
             </h2>
             <p class="text-xs text-emerald-100/90 leading-relaxed">
-              Confirms security. Cancels active rescue distress alarms and updates map to Green.
+              Updates your safety check-in. SOS reports stay in the review queue.
             </p>
           </div>
         </button>
 
       </div>
 
-      <!-- Offline SMS Trigger Preview (Fallback) -->
+      <p id="citizenNotice" role="status" class="text-sm text-blue-200"></p>
+      <section class="rounded-xl border border-slate-800 p-4">
+        <h2 class="font-bold">Your SOS reports</h2>
+        <div id="citizenReports" class="mt-3 space-y-3"></div>
+        <div id="citizenPages" class="mt-3 flex gap-2"></div>
+      </section>
+
+      <!-- Offline SMS fallback -->
       <div
         class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
         <div>
           <span class="font-bold text-slate-300">📱 Offline SMS Emergency Fallback</span>
-          <p class="text-slate-400 text-[11px]">No mobile data? Your GPS still works. These buttons put your exact
-            coordinates in an SMS to the rescue gateway; just press Send.</p>
+          <p class="text-slate-400 text-[11px]">Prepare a message for the configured project gateway, then tap Send in your SMS app.</p>
         </div>
         <div class="flex flex-col gap-1.5">
           <button type="button" onclick="triggerOfflineSMSFallback('SOS')"
@@ -389,7 +384,7 @@
       <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex justify-between items-center text-xs">
         <div>
           <h2 class="font-bold text-white text-sm">🏥 Hospital Capacity & Resource Enquiry</h2>
-          <p class="text-slate-400 text-[11px]">Grounded data: Beds, Ambulances, Food & Medicine by Region/State.</p>
+          <p class="text-slate-400 text-[11px]">Synthetic examples for research. Capacity and distance values are illustrative.</p>
         </div>
         <button onclick="switchCitizenTab('sos')" class="text-blue-400 hover:underline">← Back to SOS</button>
       </div>
@@ -403,188 +398,24 @@
 
 
   <!-- ============================================================== -->
-  <!-- VIEW 3: RESCUE DEPARTMENT ADMIN PANEL (rescue123 / RSC123)     -->
+  <!-- VIEW 3: AUTHENTICATED OPERATOR DASHBOARD                       -->
   <!-- ============================================================== -->
   <main id="view-rescue-dashboard" class="flex-1 hidden px-4 sm:px-8 py-6 max-w-6xl mx-auto w-full space-y-6">
-
-    <!-- Top Rescue Control Bar -->
-    <div class="p-5 rounded-2xl bg-slate-900/90 border border-red-500/40 shadow-2xl space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="text-2xl">🚨</span>
-            <h2 class="text-lg font-black tracking-tight text-white">Rescue Operations Command Center</h2>
-          </div>
-          <p class="text-xs text-slate-400">Authenticated: Officer <strong>@rescue123</strong> | Scheduled 5-Minute
-            Batch Sync</p>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="triggerManual5MinSync()"
-            class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-600/30 flex items-center gap-1.5">
-            <span>🔄</span>
-            <span>Force 5-Min Sync Now</span>
-          </button>
-          <button type="button" onclick="handleLogout()"
-            class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs border border-slate-700">
-            Exit Portal
-          </button>
-        </div>
+    <section class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+      <div class="flex items-center justify-between gap-3">
+        <h1 id="workQueueTitle" class="text-xl font-bold">SOS review queue</h1>
+        <button type="button" onclick="refreshQueue()" class="px-3 py-2 rounded-lg bg-blue-700 text-white text-sm">Refresh</button>
       </div>
-
-      <!-- 4-COLOR VICTIM TALLY BAR -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs pt-1">
-
-        <!-- RED DOTS: IN DANGER -->
-        <label
-          class="p-3.5 rounded-xl bg-red-950/40 border border-red-500/50 flex items-center justify-between cursor-pointer">
-          <div class="flex items-center gap-2">
-            <input type="checkbox" id="filterRed" checked onchange="refreshMapMarkers()"
-              class="w-4 h-4 text-red-600 rounded bg-slate-900" />
-            <div>
-              <span class="font-bold text-red-400 flex items-center gap-1">🔴 Danger (SOS Active)</span>
-              <p class="text-[10px] text-slate-400">Immediate rescue required</p>
-            </div>
-          </div>
-          <span id="tallyRed" class="text-xl font-black font-mono text-red-400">2</span>
-        </label>
-
-        <!-- YELLOW DOTS: UNRESPONSIVE -->
-        <label
-          class="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/50 flex items-center justify-between cursor-pointer">
-          <div class="flex items-center gap-2">
-            <input type="checkbox" id="filterYellow" checked onchange="refreshMapMarkers()"
-              class="w-4 h-4 text-amber-500 rounded bg-slate-900" />
-            <div>
-              <span class="font-bold text-amber-400 flex items-center gap-1">🟡 Unresponsive</span>
-              <p class="text-[10px] text-slate-400">No ping > 6 hours</p>
-            </div>
-          </div>
-          <span id="tallyYellow" class="text-xl font-black font-mono text-amber-400">1</span>
-        </label>
-
-        <!-- GREEN DOTS: SAFE -->
-        <label
-          class="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/50 flex items-center justify-between cursor-pointer">
-          <div class="flex items-center gap-2">
-            <input type="checkbox" id="filterGreen" checked onchange="refreshMapMarkers()"
-              class="w-4 h-4 text-emerald-500 rounded bg-slate-900" />
-            <div>
-              <span class="font-bold text-emerald-400 flex items-center gap-1">🟢 Confirmed Safe</span>
-              <p class="text-[10px] text-slate-400">Household checked in</p>
-            </div>
-          </div>
-          <span id="tallyGreen" class="text-xl font-black font-mono text-emerald-400">1</span>
-        </label>
-
-        <!-- GREY DOTS: FIND MY DEVICE UNREGISTERED -->
-        <label
-          class="p-3.5 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-between cursor-pointer">
-          <div class="flex items-center gap-2">
-            <input type="checkbox" id="filterGrey" checked onchange="refreshMapMarkers()"
-              class="w-4 h-4 text-slate-400 rounded bg-slate-900" />
-            <div>
-              <span class="font-bold text-slate-300 flex items-center gap-1">⚪ Find My Device</span>
-              <p class="text-[10px] text-slate-400">Unregistered pings</p>
-            </div>
-          </div>
-          <span id="tallyGrey" class="text-xl font-black font-mono text-slate-300">2</span>
-        </label>
-
-      </div>
-    </div>
-
-    <!-- PHONE LOCATION SEARCH & SMS SIMULATOR BAR -->
-    <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3 text-xs">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-        <span class="font-bold text-white flex items-center gap-1.5">
-          <span>🔍</span> Locate Citizen by Registered Phone Number
-        </span>
-        <button type="button" onclick="openModal('modal-sms-sim')"
-          class="px-3 py-1.5 rounded-lg bg-red-950/50 hover:bg-red-900/50 text-red-300 border border-red-800/60 font-semibold text-[11px] flex items-center gap-1.5 transition-all self-start sm:self-auto">
-          <span>📥</span>
-          <span>Simulate Incoming Emergency SMS (Fallback Test)</span>
-        </button>
-      </div>
-
-      <div class="flex flex-col sm:flex-row gap-2">
-        <div class="flex-1 flex gap-2">
-          <input type="text" id="searchPhoneInput" placeholder="Type phone number to locate (e.g. 9811223344)..."
-            class="w-full px-3 py-2 rounded-lg input-box text-xs font-mono"
-            onkeydown="if(event.key === 'Enter') locateByPhone()" />
-          <button type="button" onclick="locateByPhone()"
-            class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs whitespace-nowrap shadow-md shadow-blue-600/30">
-            Locate on Map 📍
-          </button>
-          <button
-            type="button"
-            onclick="requestLiveLocation()"
-            title="Texts a one-time link to this number; their phone's GPS is shown on the map when they open it"
-            class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs whitespace-nowrap shadow-md shadow-red-600/30"
-          >
-            Request Live Location 📡
-          </button>
-        </div>
-        <div class="flex items-center gap-1.5 overflow-x-auto text-[10px] pt-1 sm:pt-0">
-          <span class="text-slate-400">Quick Test:</span>
-          <button type="button" onclick="locateByPhone('9811223344')"
-            class="px-2 py-1 rounded bg-red-950/60 text-red-300 border border-red-800/60 font-mono">9811223344
-            🔴</button>
-          <button type="button" onclick="locateByPhone('9871122334')"
-            class="px-2 py-1 rounded bg-amber-950/60 text-amber-300 border border-amber-800/60 font-mono">9871122334
-            🟡</button>
-          <button type="button" onclick="locateByPhone('9876543210')"
-            class="px-2 py-1 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 font-mono">9876543210
-            🟢</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- LEAFLET RESCUE MAP -->
-    <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
-      <div class="flex items-center justify-between text-xs">
-        <span class="font-bold text-white flex items-center gap-2">
-          <span>🗺️</span> Regional Emergency GIS Map (Delhi NCR & Alert Zones)
-        </span>
-        <span class="text-slate-400 text-[11px] font-mono" id="mapStatusText">Map loaded. Markers synced.</span>
-      </div>
-
-      <div id="rescueLeafletMap"></div>
-    </div>
-
-    <!-- ACTIVE RESCUE DISPATCH QUEUE -->
-    <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3 text-xs">
-      <div class="flex items-center justify-between">
-        <h3 class="font-bold text-white text-sm">🚨 Priority Dispatch Queue (Red Dots First)</h3>
-        <span class="text-blue-400 font-mono text-[11px]">Module 4 OR-Tools Routing Ready</span>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="border-b border-slate-800 text-slate-400 text-[11px] uppercase">
-              <th class="py-2 px-3">Status</th>
-              <th class="py-2 px-3">Citizen / Device</th>
-              <th class="py-2 px-3">Phone</th>
-              <th class="py-2 px-3">Coordinates</th>
-              <th class="py-2 px-3">Trigger Method</th>
-              <th class="py-2 px-3">Battery</th>
-              <th class="py-2 px-3 text-right">Action</th>
-            </tr>
-          </thead>
-          <tbody id="dispatchTableBody">
-            <!-- Rendered via JS -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
+      <p id="queueNotice" role="status" class="text-sm text-slate-300"></p>
+      <div id="workQueue" class="space-y-3"></div>
+      <div id="queuePages" class="flex gap-2"></div>
+    </section>
+    <section class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+      <h2 class="font-bold">Report locations on this page</h2>
+      <div id="rescueLeafletMap" aria-label="SOS report map"></div>
+    </section>
   </main>
 
-
-  <!-- ============================================================== -->
-  <!-- MODAL: RESCUE DEPT SIGN IN (rescue123 / RSC123)                -->
-  <!-- ============================================================== -->
   <div id="modal-rescue-login"
     class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="w-full max-w-sm bg-[#111a2e] border border-red-500/50 rounded-2xl shadow-2xl p-6 space-y-4 relative">
@@ -598,30 +429,25 @@
         </div>
         <div>
           <h2 class="text-base font-bold text-white">Rescue Command Access</h2>
-          <p class="text-xs text-slate-400">Department Personnel Authentication</p>
+          <p class="text-xs text-slate-400">Project operator sign-in</p>
         </div>
-      </div>
-
-      <div class="p-2.5 rounded-xl bg-red-950/40 border border-red-800/40 text-xs text-red-200">
-        Officer Login: <strong class="font-mono text-white">rescue123</strong> | Pass: <strong
-          class="font-mono text-white">RSC123</strong>
       </div>
 
       <form onsubmit="handleRescueLogin(event)" class="space-y-3 text-xs">
         <div>
           <label class="block font-semibold text-slate-300 uppercase mb-1">Username</label>
-          <input type="text" id="rescueUser" value="rescue123"
+          <input type="text" id="rescueUser" autocomplete="username"
             class="w-full px-3 py-2 rounded-lg input-box text-xs font-mono font-bold" required />
         </div>
         <div>
           <label class="block font-semibold text-slate-300 uppercase mb-1">Password</label>
-          <input type="password" id="rescuePass" value="RSC123"
+          <input type="password" id="rescuePass" autocomplete="current-password"
             class="w-full px-3 py-2 rounded-lg input-box text-xs font-mono" required />
         </div>
         <p id="rescueLoginError" class="text-red-400 text-xs hidden"></p>
         <button type="submit"
           class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs shadow-lg shadow-red-600/30">
-          Enter Rescue Command Map →
+          Sign in
         </button>
       </form>
     </div>
@@ -646,35 +472,23 @@
       <form onsubmit="handleCitizenRegister(event)" class="space-y-3">
         <div>
           <label class="block uppercase font-semibold text-slate-300 mb-0.5">Username *</label>
-          <input type="text" id="regUsername" placeholder="e.g. keshav99"
+          <input type="text" id="regUsername" autocomplete="username" minlength="3" maxlength="40"
             class="w-full px-3 py-2 rounded-lg input-box text-xs" required />
         </div>
         <div>
           <label class="block uppercase font-semibold text-slate-300 mb-0.5">Create Password *</label>
-          <input type="password" id="regPassword" placeholder="Min. 6 chars"
+          <input type="password" id="regPassword" autocomplete="new-password" minlength="12" maxlength="128" placeholder="At least 12 characters"
             class="w-full px-3 py-2 rounded-lg input-box text-xs font-mono" required />
         </div>
         <div>
           <label class="block uppercase font-semibold text-slate-300 mb-0.5">Confirm Password *</label>
-          <input type="password" id="regConfirmPassword" placeholder="Re-enter password"
+          <input type="password" id="regConfirmPassword" autocomplete="new-password" placeholder="Re-enter password"
             class="w-full px-3 py-2 rounded-lg input-box text-xs font-mono" required />
         </div>
-        <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
-          <label class="block uppercase font-semibold text-slate-300 text-[10px]">Mobile Number & Phone OTP *</label>
-          <div class="flex gap-1.5">
-            <span class="px-2 py-1.5 rounded bg-slate-800 text-slate-400 font-mono text-[11px]">+91</span>
-            <input type="tel" id="regPhone" maxlength="10" placeholder="10-digit mobile"
-              class="w-full px-2.5 py-1.5 rounded-lg input-box text-xs font-mono" required />
-            <button type="button" id="btnSendOtp" onclick="handleSendOTP()"
-              class="px-2.5 py-1.5 rounded-lg bg-blue-600 text-white text-[10px] whitespace-nowrap">Send OTP</button>
-          </div>
-          <div id="otpDrawer"
-            class="hidden p-2 rounded bg-amber-500/10 border border-amber-500/30 text-amber-300 flex justify-between items-center text-[11px]">
-            <span>Code: <strong id="demoOtp">123456</strong></span>
-            <button type="button" onclick="handleVerifyOTP()"
-              class="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold">Verify</button>
-          </div>
-          <span id="tagOtpVerified" class="hidden text-emerald-400 font-bold text-[10px]">✓ Mobile Verified</span>
+        <div>
+          <label for="regPhone" class="block uppercase font-semibold text-slate-300 mb-0.5">Callback number (optional)</label>
+          <input type="tel" id="regPhone" maxlength="16" placeholder="+ country code and number"
+            class="w-full px-3 py-2 rounded-lg input-box text-xs" />
         </div>
 
         <p id="regError" class="text-red-400 text-xs hidden"></p>
@@ -701,19 +515,17 @@
         <h2 class="text-base font-bold text-white flex items-center gap-1.5">
           <span>🔑</span> Citizen Sign In
         </h2>
-        <button type="button" onclick="fillDemoCitizen()" class="text-[10px] text-blue-300 underline">Autofill
-          Demo</button>
       </div>
 
       <form onsubmit="handleCitizenLogin(event)" class="space-y-3">
         <div>
           <label class="block uppercase font-semibold text-slate-300 mb-0.5">Username</label>
-          <input type="text" id="loginUsername" placeholder="Username"
+          <input type="text" id="loginUsername" autocomplete="username" placeholder="Username"
             class="w-full px-3 py-2 rounded-lg input-box text-xs" required />
         </div>
         <div>
           <label class="block uppercase font-semibold text-slate-300 mb-0.5">Password</label>
-          <input type="password" id="loginPassword" placeholder="Password"
+          <input type="password" id="loginPassword" autocomplete="current-password" placeholder="Password"
             class="w-full px-3 py-2 rounded-lg input-box text-xs font-mono" required />
         </div>
         <p id="loginError" class="text-red-400 text-xs hidden"></p>
@@ -726,1244 +538,12 @@
   </div>
 
 
-  <!-- ============================================================== -->
-  <!-- MODAL: UPDATE PROFILE (Parents, Guardians, Village, Address)   -->
-  <!-- ============================================================== -->
-  <div id="modal-profile"
-    class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-    <div
-      class="w-full max-w-md bg-[#111a2e] border border-[#1e2c47] rounded-2xl shadow-2xl p-5 space-y-3.5 relative my-6 text-xs max-h-[88vh] overflow-y-auto">
-      <button onclick="closeModal('modal-profile')"
-        class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold">✕</button>
-      <h2 class="text-base font-bold text-white">⚙️ Update Emergency Profile</h2>
-      <p class="text-slate-400 text-[11px]">Add parent, guardian, and village details so rescue teams can coordinate
-        evacuation.</p>
-
-      <form onsubmit="handleProfileSave(event)" class="space-y-3">
-        <div>
-          <label class="block text-slate-400 font-bold mb-0.5">📍 Current Residence Address</label>
-          <input type="text" id="profAddr1" placeholder="Flat, Street, City - PIN"
-            class="w-full px-2.5 py-1.5 rounded input-box text-xs" />
-        </div>
-        <div>
-          <label class="block text-emerald-400 font-bold mb-0.5">🌾 Native Village / Gau (गांव का पता)</label>
-          <input type="text" id="profVillage" placeholder="Village Name, District, State"
-            class="w-full px-2.5 py-1.5 rounded input-box text-xs" />
-        </div>
-        <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
-          <span class="text-blue-300 font-bold">👨‍👩‍👧 Parent Contact & Address</span>
-          <input type="text" id="profParentName" placeholder="Parent Full Name & Mobile Number"
-            class="w-full px-2 py-1 rounded input-box text-xs" />
-          <input type="text" id="profParentAddr" placeholder="Parent Residential Address"
-            class="w-full px-2 py-1 rounded input-box text-xs" />
-        </div>
-        <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
-          <span class="text-amber-300 font-bold">🤝 Guardian / Secondary Contact</span>
-          <input type="text" id="profGuardianName" placeholder="Guardian Name, Phone & Relation"
-            class="w-full px-2 py-1 rounded input-box text-xs" />
-          <input type="text" id="profGuardianAddr" placeholder="Guardian Address"
-            class="w-full px-2 py-1 rounded input-box text-xs" />
-        </div>
-        <button type="submit"
-          class="w-full py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-md shadow-blue-600/30">
-          Save Profile Updates ✓
-        </button>
-      </form>
-    </div>
-  </div>
-
-
-  <!-- ============================================================== -->
-  <!-- MODAL: INBOUND SMS & ANDROID SMS GATEWAY (capcom6) TEST TOOL   -->
-  <!-- ============================================================== -->
-  <div id="modal-sms-sim"
-    class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4">
-    <div
-      class="w-full max-w-lg bg-[#111a2e] border border-red-500/50 rounded-2xl shadow-2xl p-5 space-y-4 relative text-xs">
-      <button onclick="closeModal('modal-sms-sim')"
-        class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold">✕</button>
-
-      <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-red-600/20 border border-red-500/40 flex items-center justify-center text-lg">
-          📱
-        </div>
-        <div>
-          <h2 class="text-base font-bold text-white">Emergency SMS Gateway Receiver</h2>
-          <p class="text-slate-400 text-[11px]">Powered by <a href="https://github.com/capcom6/android-sms-gateway"
-              target="_blank" class="text-blue-400 underline font-mono">capcom6/android-sms-gateway</a></p>
-        </div>
-      </div>
-
-      <!-- Tab Switcher -->
-      <div
-        class="grid grid-cols-2 gap-2 bg-slate-900/80 p-1 rounded-xl border border-slate-800 text-[11px] font-semibold">
-        <button type="button" id="tabSmsSimDirect" onclick="switchSmsModalTab('direct')"
-          class="py-1.5 rounded-lg bg-blue-600 text-white shadow">
-          ⚡ Direct SMS Simulator
-        </button>
-        <button type="button" id="tabSmsSimCapcom" onclick="switchSmsModalTab('capcom')"
-          class="py-1.5 rounded-lg text-slate-400 hover:text-white">
-          🤖 Android Gateway (capcom6)
-        </button>
-      </div>
-
-      <!-- TAB 1: DIRECT SIMULATOR -->
-      <div id="contentSmsSimDirect" class="space-y-3">
-        <form onsubmit="handleSimulateSMS(event)" class="space-y-3">
-          <div>
-            <label class="block uppercase font-semibold text-slate-300 text-[10px] mb-0.5">Sender Registered Phone
-              Number</label>
-            <input type="tel" id="simSmsPhone" value="9876543210"
-              class="w-full px-2.5 py-1.5 rounded input-box text-xs font-mono" required />
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block uppercase font-semibold text-slate-300 text-[10px] mb-0.5">Victim Latitude</label>
-              <input type="text" id="simSmsLat" value="28.6505"
-                class="w-full px-2.5 py-1.5 rounded input-box text-xs font-mono" required />
-            </div>
-            <div>
-              <label class="block uppercase font-semibold text-slate-300 text-[10px] mb-0.5">Victim Longitude</label>
-              <input type="text" id="simSmsLon" value="77.2300"
-                class="w-full px-2.5 py-1.5 rounded input-box text-xs font-mono" required />
-            </div>
-          </div>
-
-          <div>
-            <label class="block uppercase font-semibold text-slate-300 text-[10px] mb-0.5">Preset Disaster
-              Location</label>
-            <select onchange="applySmsPreset(this.value)" class="w-full px-2.5 py-1.5 rounded input-box text-xs">
-              <option value="28.6505,77.2300">Red Fort / Yamuna Flood Zone (28.6505, 77.2300)</option>
-              <option value="28.6139,77.2090">Civil Lines / Central Delhi (28.6139, 77.2090)</option>
-              <option value="28.5355,77.2410">Kalkaji / South Delhi (28.5355, 77.2410)</option>
-              <option value="28.4595,77.0266">Gurugram Sector 29 (28.4595, 77.0266)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block uppercase font-semibold text-slate-300 text-[10px] mb-0.5">Raw SMS Message Body</label>
-            <textarea id="simSmsBody" rows="2"
-              class="w-full px-2.5 py-1.5 rounded input-box text-xs font-mono">DISASTEROPS SOS 28.6505, 77.2300 WATER RISING FAST NEED RESCUE</textarea>
-          </div>
-
-          <button type="submit"
-            class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs shadow-lg shadow-red-600/30">
-            📥 Send Simulated SMS & Plot on Map →
-          </button>
-        </form>
-      </div>
-
-      <!-- TAB 2: CAPCOM6 ANDROID SMS GATEWAY INTEGRATION -->
-      <div id="contentSmsSimCapcom" class="space-y-3 hidden">
-        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-slate-200">Android GSM Gateway Station:</span>
-            <span id="gatewayStatusBadge"
-              class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              ● Webhook Configured
-            </span>
-          </div>
-          <p class="text-[11px] text-slate-400">
-            Connect any Android phone running <a href="https://github.com/capcom6/android-sms-gateway/releases"
-              target="_blank" class="text-blue-400 underline font-semibold">capcom6/android-sms-gateway</a>. When an SMS
-            arrives on the phone from a stranded citizen, the app dispatches an HTTP POST webhook directly to
-            DisasterOps AI!
-          </p>
-          <div class="bg-black/40 p-2 rounded text-[10px] font-mono text-slate-300 space-y-0.5">
-            <div><span class="text-slate-500">Android App URL:</span> http://&lt;phone-ip&gt;:8080</div>
-            <div><span class="text-slate-500">FastAPI Webhook:</span> http://localhost:8000/api/v1/sms/gateway/webhook
-            </div>
-            <div><span class="text-slate-500">Event Hook:</span> sms:received</div>
-          </div>
-        </div>
-
-        <div class="space-y-1.5">
-          <label class="block uppercase font-semibold text-slate-300 text-[10px]">Real Capcom6 Webhook Payload
-            (Sample)</label>
-          <pre id="capcomPayloadPreview"
-            class="p-2.5 rounded-xl bg-black/50 border border-slate-800 text-[10px] font-mono text-emerald-400 overflow-x-auto max-h-28">{
-  "event": "sms:received",
-  "payload": {
-    "message": "DISASTEROPS SOS from @keshav45 at Coordinates: 28.6505, 77.2300. NEED RESCUE",
-    "sender": "+919876543210",
-    "recipient": "+91112",
-    "simNumber": 1
-  }
-}</pre>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <button type="button" onclick="testCapcom6LiveWebhook()"
-            class="w-full py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs shadow-md">
-            🚀 Test Capcom6 Webhook
-          </button>
-          <button type="button" onclick="checkGatewayHealth()"
-            class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700">
-            📡 Ping Android Gateway
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ============================================================== -->
-  <!-- JAVASCRIPT APPLICATION CORE (Shake Sensor + Leaflet Map + Sync) -->
-  <!-- ============================================================== -->
-  <script>
-    // Storage keys
-    const SESSION_ROLE_KEY = 'disasterops_session_role';
-    const CITIZEN_USER_KEY = 'disasterops_active_citizen';
-    const MARKERS_STORAGE_KEY = 'disasterops_map_markers_v2';
-    const GATEWAY_NUMBER_KEY = 'disasterops_gateway_number';
-    // Same origin when served by FastAPI (or a tunnel); localhost when opened as a file
-    const API_BASE = location.protocol.startsWith('http') ? location.origin : 'http://localhost:8000';
-
-    // Cache the capcom6 gateway SIM number while online, so offline SMS knows where to go
-    async function loadPublicConfig() {
-      try {
-        const cfg = await (await fetch(API_BASE + "/api/v1/config")).json();
-        if (cfg.gateway_number) localStorage.setItem(GATEWAY_NUMBER_KEY, cfg.gateway_number);
-      } catch (_) { /* offline: keep cached number */ }
-    }
-
-    // Seeded Marker Dataset for Rescue Command Map
-    // 🔴 Red = Danger (Active SOS), 🟡 Yellow = Unresponsive, 🟢 Green = Safe, ⚪ Grey = Find My Device
-    function getLoadedMarkers() {
-      const defaultList = [
-        { id: "citizen_keshav45", name: "Keshav (@keshav45)", phone: "9876543210", color: "green", category: "Confirmed Safe", lat: 28.6190, lon: 77.2150, trigger: "REGISTRATION", battery: 95, lastUpdate: "Live on Dashboard" },
-        { id: "v1", name: "Rahul Verma (@rahul_delhi)", phone: "9811223344", color: "red", category: "Danger (SOS Active)", lat: 28.6289, lon: 77.2185, trigger: "SHAKE_DEVICE", battery: 14, lastUpdate: "3 min ago" },
-        { id: "v2", name: "Ananya Roy", phone: "9822334455", color: "red", category: "Danger (SOS Active)", lat: 28.6410, lon: 77.2310, trigger: "BUTTON", battery: 29, lastUpdate: "7 min ago" },
-        { id: "v3", name: "Priya Sharma (@priya_sharma)", phone: "9871122334", color: "yellow", category: "Unresponsive (>6 hrs)", lat: 28.5921, lon: 77.2280, trigger: "EXPIRED_TIMER", battery: 22, lastUpdate: "6h 40m ago" },
-        { id: "v4", name: "Keshav Sharma (@keshav99)", phone: "9876543210", color: "green", category: "Confirmed Safe", lat: 28.6139, lon: 77.2090, trigger: "CHECKIN", battery: 88, lastUpdate: "Just now" },
-        { id: "fmd1", name: "Unregistered Phone (FMD-982)", phone: "Find My Device Telemetry", color: "grey", category: "Unregistered Device", lat: 28.6350, lon: 77.2250, trigger: "FIND_MY_DEVICE_API", battery: "Unknown", lastUpdate: "Live Ping" },
-        { id: "fmd2", name: "Unregistered Phone (FMD-404)", phone: "Find My Device Telemetry", color: "grey", category: "Unregistered Device", lat: 28.6010, lon: 77.2110, trigger: "FIND_MY_DEVICE_API", battery: "Unknown", lastUpdate: "Live Ping" }
-      ];
-      try {
-        const stored = localStorage.getItem(MARKERS_STORAGE_KEY);
-        if (stored) {
-          let parsed = JSON.parse(stored);
-          // Ensure keshav45 is NEVER missing even if older cache exists in browser
-          if (!parsed.some(m => m.id === "citizen_keshav45" || (m.name && m.name.toLowerCase().includes("keshav45")))) {
-            parsed.unshift({
-              id: "citizen_keshav45",
-              name: "Keshav (@keshav45)",
-              phone: "9876543210",
-              color: "green",
-              category: "Confirmed Safe",
-              lat: 28.6190,
-              lon: 77.2150,
-              trigger: "REGISTRATION",
-              battery: 95,
-              lastUpdate: "Live on Dashboard"
-            });
-          }
-          return parsed;
-        }
-      } catch (e) { }
-      return defaultList;
-    }
-
-    let MAP_MARKERS = getLoadedMarkers();
-
-    function saveLoadedMarkers() {
-      localStorage.setItem(MARKERS_STORAGE_KEY, JSON.stringify(MAP_MARKERS));
-    }
-
-    // Seed Hospital Data
-    const HOSPITALS = [
-      { name: "AIIMS Trauma Center", state: "Delhi", region: "South Delhi", dist: "3.2 km", amb: 14, maxAmb: 16, beds: 48, icu: 12, food: 450, meds: 980 },
-      { name: "Safdarjung Emergency", state: "Delhi", region: "South Delhi", dist: "4.1 km", amb: 9, maxAmb: 12, beds: 64, icu: 7, food: 600, meds: 1250 },
-      { name: "LNJP Central Hospital", state: "Delhi", region: "Central Delhi", dist: "6.8 km", amb: 8, maxAmb: 10, beds: 35, icu: 4, food: 320, meds: 800 },
-      { name: "Medanta The Medicity", state: "Haryana", region: "Gurugram", dist: "16.4 km", amb: 15, maxAmb: 20, beds: 85, icu: 21, food: 900, meds: 2400 }
-    ];
-
-    let leafletMapInstance = null;
-    let leafletMarkersLayer = null;
-    let syncTimerInterval = null;
-    let syncSecondsLeft = 300;
-
-    // Active citizen object
-    let activeCitizen = {
-      username: "keshav99",
-      phone: "9876543210",
-      status: "SAFE",
-      lat: 28.6139,
-      lon: 77.2090
-    };
-
-    // Modal helpers
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-    function openLoginModal() { openModal('modal-login'); }
-    function openRegisterModal() { openModal('modal-register'); }
-    function openRescueLoginModal() { openModal('modal-rescue-login'); }
-    function openProfileModal() { closeModal('profileDropdown'); openModal('modal-profile'); }
-    function toggleProfileDropdown() { document.getElementById('profileDropdown').classList.toggle('hidden'); }
-
-    function fillDemoCitizen() {
-      document.getElementById('loginUsername').value = "keshav99";
-      document.getElementById('loginPassword').value = "password123";
-    }
-
-    // ==============================================================
-    // 1. SHAKE-TO-SOS ACCELEROMETER LISTENER
-    // ==============================================================
-    let lastX = null, lastY = null, lastZ = null;
-    let lastShakeTime = 0;
-    const SHAKE_THRESHOLD = 26; // Acceleration delta threshold
-
-    function initShakeDetection() {
-      if (window.DeviceMotionEvent) {
-        window.addEventListener('devicemotion', (event) => {
-          const acc = event.accelerationIncludingGravity || event.acceleration;
-          if (!acc) return;
-
-          const curTime = Date.now();
-          if ((curTime - lastShakeTime) > 1000) { // Throttle shake events to 1s
-            const diffTime = curTime - lastShakeTime;
-            const deltaX = Math.abs((lastX || 0) - acc.x);
-            const deltaY = Math.abs((lastY || 0) - acc.y);
-            const deltaZ = Math.abs((lastZ || 0) - acc.z);
-
-            if (deltaX + deltaY + deltaZ > SHAKE_THRESHOLD) {
-              lastShakeTime = curTime;
-              triggerShakeSOS();
-            }
-
-            lastX = acc.x;
-            lastY = acc.y;
-            lastZ = acc.z;
-          }
-        });
-      }
-    }
-
-    function triggerShakeSOS() {
-      // Trigger haptic vibration if supported
-      if (navigator.vibrate) {
-        navigator.vibrate([400, 200, 400]);
-      }
-      handleCitizenStatusUpdate('HELP', 'SHAKE_DEVICE');
-      alert("🚨 SHAKE DETECTED! Emergency SOS Signal Dispatched via Accelerometer.");
-    }
-
-    function simulateShakeEvent() {
-      triggerShakeSOS();
-    }
-
-    // ==============================================================
-    // 2. OFFLINE SMS FALLBACK TRIGGER
-    // ==============================================================
-    // kind = 'SOS' (needs help -> red dot) or 'LOC' (location only, status unchanged)
-    async function triggerOfflineSMSFallback(kind) {
-      kind = kind === 'LOC' ? 'LOC' : 'SOS';
-      const gatewayNumber = localStorage.getItem(GATEWAY_NUMBER_KEY);
-      if (!gatewayNumber) {
-        alert("Rescue SMS number is not set yet. Open the app once with internet so it can download it.");
-        return;
-      }
-
-      showSmsPanel('📡 Getting your exact GPS position… (works without internet)');
-      const fix = await getFreshFix();
-      if (!fix) {
-        showSmsPanel('❌ Could not read GPS. Turn on Location / GPS and try again.');
-        return;
-      }
-
-      const user = activeCitizen.username || "citizen";
-      const battery = await getBatteryPercent();
-      const age = Math.round((Date.now() - fix.time) / 60000);
-      const text = `DISASTEROPS ${kind} @${user} Lat: ${fix.lat.toFixed(6)} Lon: ${fix.lon.toFixed(6)} ` +
-                   `Acc: ${Math.round(fix.acc)}m` + (battery != null ? ` Bat: ${battery}%` : '') +
-                   (age > 1 ? ` Age: ${age}min` : '');
-      const smsUri = `sms:${gatewayNumber}?body=${encodeURIComponent(text)}`;
-
-      showSmsPanel(`Ready: ${text}`, smsUri);
-      try { window.location.href = smsUri; } catch (_) { /* user taps the button instead */ }
-    }
-
-    // Persistent panel with a tappable link (browsers may block opening the SMS app
-    // automatically after a GPS wait, but a direct tap always works)
-    function showSmsPanel(message, smsUri) {
-      let panel = document.getElementById('smsSendPanel');
-      if (!panel) {
-        panel = document.createElement('div');
-        panel.id = 'smsSendPanel';
-        panel.style.cssText = 'position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;background:#0f172a;border:1px solid #dc2626;border-radius:14px;padding:14px;color:#e2e8f0;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.5)';
-        document.body.appendChild(panel);
-      }
-      panel.innerHTML = `<div style="margin-bottom:8px;word-break:break-word"></div>` +
-        (smsUri ? `<a href="${smsUri}" style="display:block;text-align:center;background:#dc2626;color:#fff;font-weight:700;padding:12px;border-radius:10px;text-decoration:none">📨 Open SMS app &amp; press SEND</a>` : '') +
-        `<button type="button" style="margin-top:8px;width:100%;background:none;border:0;color:#94a3b8" onclick="this.parentElement.remove()">Close</button>`;
-      panel.firstChild.textContent = message;
-    }
-
-    // ==============================================================
-    // 2b. EXACT GPS: fresh fix + continuous tracking + server heartbeat
-    // ==============================================================
-    const LAST_FIX_KEY = 'disasterops_last_fix';
-    let gpsWatchId = null;
-    let lastHeartbeatAt = 0;
-
-    function saveFix(pos) {
-      const fix = { lat: pos.coords.latitude, lon: pos.coords.longitude, acc: pos.coords.accuracy, time: Date.now() };
-      activeCitizen.lat = fix.lat;
-      activeCitizen.lon = fix.lon;
-      activeCitizen.acc = fix.acc;
-      try { localStorage.setItem(LAST_FIX_KEY, JSON.stringify(fix)); } catch (_) { }
-      return fix;
-    }
-
-    function getLastFix() {
-      try { return JSON.parse(localStorage.getItem(LAST_FIX_KEY)); } catch (_) { return null; }
-    }
-
-    // GPS hardware works without internet; enableHighAccuracy forces the GPS chip.
-    function getFreshFix(timeoutMs = 12000) {
-      return new Promise(resolve => {
-        if (!navigator.geolocation) return resolve(getLastFix());
-        navigator.geolocation.getCurrentPosition(
-          pos => resolve(saveFix(pos)),
-          () => resolve(getLastFix()),            // fall back to the last known fix
-          { enableHighAccuracy: true, timeout: timeoutMs, maximumAge: 15000 }
-        );
-      });
-    }
-
-    async function getBatteryPercent() {
-      try { return navigator.getBattery ? Math.round((await navigator.getBattery()).level * 100) : null; }
-      catch (_) { return null; }
-    }
-
-    function startCitizenTracking() {
-      if (!navigator.geolocation || gpsWatchId !== null) return;
-      gpsWatchId = navigator.geolocation.watchPosition(pos => {
-        const fix = saveFix(pos);
-        // Online heartbeat at most once a minute
-        if (navigator.onLine && Date.now() - lastHeartbeatAt > 60000) {
-          lastHeartbeatAt = Date.now();
-          getBatteryPercent().then(bat => fetch(API_BASE + "/api/v1/citizen/location", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              username: activeCitizen.username, phone: activeCitizen.phone,
-              latitude: fix.lat, longitude: fix.lon, accuracy_meters: fix.acc, battery_percentage: bat
-            })
-          })).catch(() => { lastHeartbeatAt = 0; });
-        }
-      }, () => { }, { enableHighAccuracy: true, maximumAge: 10000, timeout: 30000 });
-    }
-
-    function stopCitizenTracking() {
-      if (gpsWatchId !== null) navigator.geolocation.clearWatch(gpsWatchId);
-      gpsWatchId = null;
-    }
-
-    // ==============================================================
-    // 3. CITIZEN STATUS UPDATE (Safe vs Help + Cloud Dispatch)
-    // ==============================================================
-    async function handleCitizenStatusUpdate(newStatus, triggerMethod) {
-      activeCitizen.status = newStatus;
-      updateCitizenUI(newStatus);
-
-      // No internet -> go straight to SMS (GPS is read inside, offline)
-      if (!navigator.onLine && newStatus === 'HELP') {
-        triggerOfflineSMSFallback('SOS');
-        return;
-      }
-
-      // Wait for a real GPS fix BEFORE sending, so the server gets the current position
-      await getFreshFix(8000);
-
-      // Update in local map marker dataset (match strictly by username/id, avoiding phone collisions)
-      const uKey = activeCitizen.username.toLowerCase();
-      const exMarker = MAP_MARKERS.find(m => m.id === "citizen_" + uKey || (m.name && m.name.toLowerCase().includes(uKey)));
-      if (exMarker) {
-        exMarker.color = newStatus === 'HELP' ? 'red' : 'green';
-        exMarker.category = newStatus === 'HELP' ? 'Danger (SOS Active)' : 'Confirmed Safe';
-        exMarker.trigger = triggerMethod;
-        exMarker.lastUpdate = "Just now";
-        exMarker.lat = activeCitizen.lat;
-        exMarker.lon = activeCitizen.lon;
-        if (activeCitizen.phone) exMarker.phone = activeCitizen.phone;
-      } else {
-        MAP_MARKERS.unshift({
-          id: "citizen_" + uKey,
-          name: `@${activeCitizen.username}`,
-          phone: activeCitizen.phone || "9876543210",
-          color: newStatus === 'HELP' ? 'red' : 'green',
-          category: newStatus === 'HELP' ? 'Danger (SOS Active)' : 'Confirmed Safe',
-          lat: activeCitizen.lat,
-          lon: activeCitizen.lon,
-          trigger: triggerMethod,
-          battery: 85,
-          lastUpdate: "Just now"
-        });
-      }
-      saveLoadedMarkers();
-
-      // Online: send to the server. If that fails (weak/no data), fall back to SMS.
-      try {
-        const bat = await getBatteryPercent();
-        const res = await fetch(API_BASE + "/api/v1/citizen/sos", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: activeCitizen.username,
-            phone: activeCitizen.phone,
-            status: newStatus,
-            latitude: activeCitizen.lat,
-            longitude: activeCitizen.lon,
-            accuracy_meters: activeCitizen.acc || null,
-            trigger_method: triggerMethod,
-            battery_percentage: bat ?? 100
-          })
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-      } catch (err) {
-        console.warn("Cloud server unreachable, using SMS fallback:", err);
-        if (newStatus === 'HELP') triggerOfflineSMSFallback('SOS');
-      }
-    }
-
-    function updateCitizenUI(st) {
-      const banner = document.getElementById('statusBanner');
-      const icon = document.getElementById('statusIcon');
-      const title = document.getElementById('statusTitle');
-      const desc = document.getElementById('statusDesc');
-
-      if (st === 'HELP') {
-        banner.className = "p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-red-950/40 border-red-500/50 text-red-300 status-pulse";
-        icon.className = "w-10 h-10 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 flex items-center justify-center text-xl font-bold";
-        icon.innerText = "🚨";
-        title.className = "text-base font-extrabold text-red-400";
-        title.innerText = "NEED HELP / DISTRESS ACTIVE";
-        desc.innerText = "Distress signal broadcasted. Pinned as Red Dot on Rescue Command Map.";
-      } else {
-        banner.className = "p-4 sm:p-5 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-emerald-950/30 border-emerald-500/40 text-emerald-300";
-        icon.className = "w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl font-bold";
-        icon.innerText = "✓";
-        title.className = "text-base font-extrabold text-emerald-400";
-        title.innerText = "I AM SAFE";
-        desc.innerText = "Status recorded as Safe in emergency registry. Auto-expires in 6 hours.";
-      }
-    }
-
-    // ==============================================================
-    // 4. RESCUE DEPARTMENT ADMIN PORTAL (rescue123 / RSC123)
-    // ==============================================================
-    function handleRescueLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('rescueUser').value.trim();
-      const p = document.getElementById('rescuePass').value.trim();
-      const err = document.getElementById('rescueLoginError');
-
-      if (u === "rescue123" && p === "RSC123") {
-        err.classList.add('hidden');
-        closeModal('modal-rescue-login');
-        localStorage.setItem(SESSION_ROLE_KEY, 'RESCUE_ADMIN');
-        openRescueDashboard();
-      } else {
-        err.innerText = "Invalid credentials. Use rescue123 / RSC123";
-        err.classList.remove('hidden');
-      }
-    }
-
-    function openRescueDashboard() {
-      // Reload any newly registered citizens from storage into map markers
-      MAP_MARKERS = getLoadedMarkers();
-
-      // Toggle views
-      document.getElementById('view-landing').classList.add('hidden');
-      document.getElementById('view-citizen-dashboard').classList.add('hidden');
-      document.getElementById('view-rescue-dashboard').classList.remove('hidden');
-
-      // Nav bar
-      document.getElementById('navPublicButtons').classList.add('hidden');
-      document.getElementById('navCitizenTabs').classList.add('hidden');
-      document.getElementById('navUserProfile').classList.add('hidden');
-      document.getElementById('navRescueBadge').classList.remove('hidden');
-      document.getElementById('navRescueLogoutBtn').classList.remove('hidden');
-
-      initLeafletRescueMap();
-      renderDispatchQueue();
-      start5MinRescueTimer();
-
-      // Live positions from the server (app GPS heartbeats + SMS via capcom6 gateway)
-      clearInterval(serverSyncInterval);
-      syncServerMarkers();
-      serverSyncInterval = setInterval(syncServerMarkers, 10000);
-    }
-
-    let serverSyncInterval = null;
-
-    function timeAgo(iso) {
-      if (!iso) return 'Unknown';
-      const s = Math.round((Date.now() - new Date(iso).getTime()) / 1000);
-      if (s < 60) return 'Just now';
-      if (s < 3600) return `${Math.round(s / 60)} min ago`;
-      return `${Math.floor(s / 3600)}h ${Math.round((s % 3600) / 60)}m ago`;
-    }
-
-    async function syncServerMarkers() {
-      let data;
-      try { data = await (await fetch(API_BASE + "/api/v1/rescue/live-map")).json(); }
-      catch (_) { return; } // server offline: keep showing cached markers
-      const digits = p => String(p || '').replace(/[^0-9]/g, '').slice(-10);
-      let changed = false;
-
-      (data.markers || []).forEach(s => {
-        if (s.color === 'grey' || !s.location_known) return;
-        const uname = String(s.id || '').toLowerCase();
-        let m = MAP_MARKERS.find(x => x.id === 'citizen_' + uname ||
-          (x.name && x.name.toLowerCase().includes('@' + uname)));
-        if (!m && uname.startsWith('sms_')) m = MAP_MARKERS.find(x => digits(x.phone) && digits(x.phone) === digits(s.phone));
-        if (!m) {
-          m = { id: 'citizen_' + uname, name: '@' + uname, phone: s.phone };
-          MAP_MARKERS.unshift(m);
-        }
-        if (m.serverUpdate === s.last_update) return;
-        Object.assign(m, {
-          color: s.color,
-          category: s.category,
-          lat: s.latitude,
-          lon: s.longitude,
-          accuracy: s.accuracy_meters,
-          source: s.location_source,
-          trigger: s.trigger,
-          battery: s.battery,
-          lastUpdate: timeAgo(s.location_time || s.last_update),
-          serverUpdate: s.last_update
-        });
-        changed = true;
-      });
-
-      if (changed) {
-        saveLoadedMarkers();
-        refreshMapMarkers();
-      }
-    }
-
-    function initLeafletRescueMap() {
-      setTimeout(() => {
-        if (!leafletMapInstance) {
-          // Centered on Delhi NCR
-          leafletMapInstance = L.map('rescueLeafletMap').setView([28.6250, 77.2190], 12);
-
-          // Dark styled OpenStreetMap tiles
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '© OpenStreetMap contributors | DisasterOps AI'
-          }).addTo(leafletMapInstance);
-
-          leafletMarkersLayer = L.layerGroup().addTo(leafletMapInstance);
-        }
-        refreshMapMarkers();
-      }, 200);
-    }
-
-    // Color pins generator for Leaflet
-    function getMarkerIcon(color) {
-      const colorHex = color === 'red' ? '#ef4444' : (color === 'yellow' ? '#f59e0b' : (color === 'green' ? '#10b981' : '#94a3b8'));
-      return L.divIcon({
-        className: 'custom-pin',
-        html: `<div style="background-color: ${colorHex}; width: 16px; height: 16px; border-radius: 50%; border: 2.5px solid #ffffff; box-shadow: 0 0 10px ${colorHex};"></div>`,
-        iconSize: [16, 16],
-        iconAnchor: [8, 8]
-      });
-    }
-
-    // Map pins registry for direct zoom by phone number
-    let markerInstances = {};
-
-    function refreshMapMarkers() {
-      if (!leafletMarkersLayer) return;
-      leafletMarkersLayer.clearLayers();
-      markerInstances = {};
-
-      const showRed = document.getElementById('filterRed').checked;
-      const showYellow = document.getElementById('filterYellow').checked;
-      const showGreen = document.getElementById('filterGreen').checked;
-      const showGrey = document.getElementById('filterGrey').checked;
-
-      let rCount = 0, yCount = 0, gCount = 0, grCount = 0;
-
-      MAP_MARKERS.forEach(m => {
-        if (m.color === 'red') rCount++;
-        if (m.color === 'yellow') yCount++;
-        if (m.color === 'green') gCount++;
-        if (m.color === 'grey') grCount++;
-
-        if (m.color === 'red' && !showRed) return;
-        if (m.color === 'yellow' && !showYellow) return;
-        if (m.color === 'green' && !showGreen) return;
-        if (m.color === 'grey' && !showGrey) return;
-
-        if (m.lat == null || m.lon == null) return;
-        if (m.accuracy) {
-          leafletMarkersLayer.addLayer(L.circle([m.lat, m.lon], {
-            radius: m.accuracy, color: m.color === 'red' ? '#ef4444' : '#3b82f6', weight: 1, fillOpacity: 0.12
-          }));
-        }
-        const sourceLabel = m.source === 'SMS' ? '📨 SMS (no data)' : (m.source === 'APP_GPS' ? '🛰️ App GPS (online)' : (m.source || '—'));
-        const pin = L.marker([m.lat, m.lon], { icon: getMarkerIcon(m.color) });
-        pin.bindPopup(`
-          <div style="font-size: 12px; color: #1e293b; padding: 4px;">
-            <strong style="font-size: 13px;">${m.name}</strong><br/>
-            <strong>Category:</strong> ${m.category}<br/>
-            <strong>Phone:</strong> ${m.phone}<br/>
-            <strong>Trigger:</strong> ${m.trigger}<br/>
-            <strong>Battery:</strong> ${m.battery}%<br/>
-            <strong>Coordinates:</strong> ${m.lat.toFixed(6)}, ${m.lon.toFixed(6)}<br/>
-            <strong>Accuracy:</strong> ${m.accuracy ? '±' + Math.round(m.accuracy) + ' m' : 'unknown'}<br/>
-            <strong>Location via:</strong> ${sourceLabel}<br/>
-            <strong>Last Update:</strong> ${m.lastUpdate}<br/>
-            <a href="tel:${m.phone}" style="display:inline-block; margin-top:6px; background:#2563eb; color:#fff; padding:3px 8px; border-radius:4px; text-decoration:none; font-weight:bold;">Call Direct</a>
-          </div>
-        `);
-        leafletMarkersLayer.addLayer(pin);
-
-        // Save reference by sanitized phone and ID
-        if (m.phone) {
-          const num = m.phone.replace(/[^0-9]/g, '');
-          markerInstances[num] = pin;
-        }
-        markerInstances[m.id] = pin;
-      });
-
-      // Update Tallies
-      document.getElementById('tallyRed').innerText = rCount;
-      document.getElementById('tallyYellow').innerText = yCount;
-      document.getElementById('tallyGreen').innerText = gCount;
-      document.getElementById('tallyGrey').innerText = grCount;
-      document.getElementById('mapStatusText').innerText = `Active Markers: ${leafletMarkersLayer.getLayers().length} rendered on map`;
-    }
-
-    // Locate Citizen by Phone Number or Username
-    function locateByPhone(queryPhone) {
-      const input = document.getElementById('searchPhoneInput');
-      const targetQuery = (queryPhone || (input ? input.value : "")).trim();
-      if (!targetQuery) {
-        alert("Please enter a phone number or username to search on the map.");
-        return;
-      }
-      const cleanPhoneQuery = targetQuery.replace(/[^0-9]/g, '');
-      const cleanTextQuery = targetQuery.toLowerCase().replace('@', '');
-
-      const found = MAP_MARKERS.find(m => {
-        const phoneMatch = cleanPhoneQuery && m.phone && m.phone.replace(/[^0-9]/g, '').includes(cleanPhoneQuery);
-        const nameMatch = m.name && m.name.toLowerCase().includes(cleanTextQuery);
-        return phoneMatch || nameMatch;
-      });
-
-      if (found) {
-        if (input && !queryPhone) input.value = found.phone || found.name;
-        if (leafletMapInstance) {
-          leafletMapInstance.flyTo([found.lat, found.lon], 16, { animate: true, duration: 1.2 });
-          setTimeout(() => {
-            const cleanNum = found.phone ? found.phone.replace(/[^0-9]/g, '') : '';
-            const pin = markerInstances[cleanNum] || markerInstances[found.id];
-            if (pin) pin.openPopup();
-          }, 1300);
-        }
-      } else {
-        alert(`No citizen found matching: "${targetQuery}".\n\nTry quick test searches: @keshav45, 9876543210, 9811223344 (Rahul) or @priya_sharma.`);
-      }
-    }
-
-    // ==============================================================
-    // REQUEST LIVE LOCATION OF A PHONE NUMBER (SMS link + Geolocation API)
-    // ==============================================================
-    let liveLocateLayer = null;
-    let liveLocatePoll = null;
-
-    async function requestLiveLocation() {
-      const input = document.getElementById('searchPhoneInput');
-      const phone = (input ? input.value : '').replace(/[^0-9]/g, '');
-      if (phone.length < 10) { alert('Enter a valid phone number first.'); return; }
-
-      let data;
-      try {
-        const res = await fetch(`${API_BASE}/api/v1/locate/request`, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone })
-        });
-        data = await res.json();
-        if (!res.ok) throw new Error(data.detail || res.status);
-      } catch (e) {
-        alert('Could not reach the server: ' + e.message);
-        return;
-      }
-
-      const smsOk = data.sms && data.sms.status === 'success';
-      document.getElementById('mapStatusText').innerText =
-        `📡 Waiting for ${phone} to share location… (${smsOk ? 'SMS sent' : 'SMS not sent – share link manually'})`;
-      if (!smsOk) {
-        prompt(`SMS gateway did not send (${data.sms ? data.sms.status : 'unknown'}).\nSend this link to ${phone} manually:`, data.link);
-      }
-
-      clearInterval(liveLocatePoll);
-      liveLocatePoll = setInterval(async () => {
-        try {
-          const r = await (await fetch(`${API_BASE}/api/v1/locate/status/${data.token}`)).json();
-          if (r.status === 'LOCATED') {
-            clearInterval(liveLocatePoll);
-            showLiveLocation(r);
-          } else if (r.status === 'EXPIRED') {
-            clearInterval(liveLocatePoll);
-            document.getElementById('mapStatusText').innerText = `⌛ Location request for ${phone} expired.`;
-          }
-        } catch (_) { /* keep polling */ }
-      }, 4000);
-    }
-
-    function showLiveLocation(r) {
-      if (!leafletMapInstance) return;
-      if (liveLocateLayer) leafletMapInstance.removeLayer(liveLocateLayer);
-      const acc = r.accuracy_meters || 0;
-      liveLocateLayer = L.layerGroup([
-        L.circle([r.latitude, r.longitude], { radius: acc, color: '#3b82f6', fillOpacity: 0.15 }),
-        L.marker([r.latitude, r.longitude], { icon: getMarkerIcon('red') }).bindPopup(`
-          <div style="font-size:12px;color:#1e293b">
-            <strong>📡 Live location: ${r.phone}</strong><br/>
-            ${r.username ? '@' + r.username + '<br/>' : ''}
-            <strong>Coordinates:</strong> ${r.latitude.toFixed(5)}, ${r.longitude.toFixed(5)}<br/>
-            <strong>Accuracy:</strong> ±${Math.round(acc)} m<br/>
-            <strong>At:</strong> ${new Date(r.located_at).toLocaleTimeString()}<br/>
-            <a href="tel:${r.phone}">Call</a> ·
-            <a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=${r.latitude},${r.longitude}">Navigate</a>
-          </div>`)
-      ]).addTo(leafletMapInstance);
-      leafletMapInstance.flyTo([r.latitude, r.longitude], acc > 500 ? 14 : 17);
-      setTimeout(() => liveLocateLayer.getLayers()[1].openPopup(), 1300);
-      document.getElementById('mapStatusText').innerText = `✅ ${r.phone} located (±${Math.round(acc)} m)`;
-    }
-
-    // Tab switcher for SMS Modal
-    function switchSmsModalTab(tab) {
-      const isDirect = tab === 'direct';
-      document.getElementById('contentSmsSimDirect').classList.toggle('hidden', !isDirect);
-      document.getElementById('contentSmsSimCapcom').classList.toggle('hidden', isDirect);
-      document.getElementById('tabSmsSimDirect').className = isDirect ? "py-1.5 rounded-lg bg-blue-600 text-white shadow" : "py-1.5 rounded-lg text-slate-400 hover:text-white";
-      document.getElementById('tabSmsSimCapcom').className = !isDirect ? "py-1.5 rounded-lg bg-blue-600 text-white shadow" : "py-1.5 rounded-lg text-slate-400 hover:text-white";
-    }
-
-    async function testCapcom6LiveWebhook() {
-      const payload = {
-        deviceId: "android_device_redmi_station",
-        event: "sms:received",
-        id: "capcom_" + Date.now(),
-        payload: {
-          messageId: "msg_" + Math.floor(Math.random() * 90000 + 10000),
-          message: "DISASTEROPS SOS from @keshav45 at Coordinates: 28.6505, 77.2300. FLOOD WATER RISING FAST.",
-          sender: "+919876543210",
-          phoneNumber: "+919876543210",
-          recipient: "+91112",
-          simNumber: 1,
-          receivedAt: new Date().toISOString()
-        },
-        webhookId: "disasterops-sms-received"
-      };
-
-      try {
-        const resp = await fetch(API_BASE + "/api/v1/sms/inbound", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-        const data = await resp.json();
-      } catch (err) {
-        console.warn("Local cloud endpoint pinged:", err);
-      }
-
-      // Update in local map markers immediately
-      const uKey = "keshav45";
-      const targetMarker = MAP_MARKERS.find(m => m.id === "citizen_" + uKey || (m.name && m.name.toLowerCase().includes(uKey)));
-      if (targetMarker) {
-        targetMarker.color = "red";
-        targetMarker.category = "Danger (SMS Gateway: capcom6)";
-        targetMarker.trigger = "SMS_GATEWAY_ANDROID";
-        targetMarker.lat = 28.6505;
-        targetMarker.lon = 77.2300;
-        targetMarker.lastUpdate = "Received via Android Gateway";
-      } else {
-        MAP_MARKERS.unshift({
-          id: "citizen_" + uKey,
-          name: "Keshav (@keshav45)",
-          phone: "9876543210",
-          color: "red",
-          category: "Danger (SMS Gateway: capcom6)",
-          lat: 28.6505,
-          lon: 77.2300,
-          trigger: "SMS_GATEWAY_ANDROID",
-          battery: 15,
-          lastUpdate: "Received via Android Gateway"
-        });
-      }
-      saveLoadedMarkers();
-
-      closeModal('modal-sms-sim');
-      document.getElementById('filterRed').checked = true;
-      refreshMapMarkers();
-      renderDispatchQueue();
-      locateByPhone("keshav45");
-
-      alert(`✅ CAPCOM6 ANDROID GATEWAY WEBHOOK INGESTED!\n\nEvent: sms:received\nSender: +91 9876543210 (@keshav45)\nExtracted Coords: 28.6505, 77.2300\nDevice: android_device_redmi_station (SIM 1)\nTrigger: SMS_GATEWAY_ANDROID\n\n🔴 RED DOT PINNED ON RESCUE MAP!`);
-    }
-
-    async function checkGatewayHealth() {
-      try {
-        const resp = await fetch(API_BASE + "/api/v1/sms/gateway/status");
-        const data = await resp.json();
-        alert(`Android SMS Gateway Status:\n\nStatus: ${data.status}\nGateway URL: ${data.gateway_url || 'Not set'}\n${data.hint || ''}`);
-      } catch (e) {
-        alert("FastAPI backend is offline or unreachable on http://localhost:8000. Start it with:\npython server.py");
-      }
-    }
-
-    // Preset location picker for SMS test tool
-    function applySmsPreset(val) {
-      const parts = val.split(',');
-      document.getElementById('simSmsLat').value = parts[0];
-      document.getElementById('simSmsLon').value = parts[1];
-      const ph = document.getElementById('simSmsPhone').value;
-      document.getElementById('simSmsBody').value = `DISASTEROPS SOS ${parts[0]}, ${parts[1]} WATER RISING FAST NEED RESCUE`;
-    }
-
-    // Process Simulated Inbound SMS
-    function handleSimulateSMS(e) {
-      e.preventDefault();
-      const phone = document.getElementById('simSmsPhone').value.trim();
-      const lat = parseFloat(document.getElementById('simSmsLat').value);
-      const lon = parseFloat(document.getElementById('simSmsLon').value);
-      const body = document.getElementById('simSmsBody').value.trim();
-
-      // Dispatch to FastAPI server if online
-      if (navigator.onLine) {
-        fetch(API_BASE + "/api/v1/sms/inbound", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            sender_phone: phone,
-            message_body: body
-          })
-        }).catch(err => console.log("SMS webhook fetch:", err));
-      }
-
-      // Add new Red Dot victim to local marker list
-      const victimId = "sms_" + Date.now();
-      const newVictim = {
-        id: victimId,
-        name: phone === '9876543210' ? 'Citizen @keshav99' : `Citizen (${phone})`,
-        phone: phone,
-        color: "red",
-        category: "Danger (SMS Fallback)",
-        lat: lat,
-        lon: lon,
-        trigger: "SMS_FALLBACK",
-        battery: 12,
-        lastUpdate: "Received via SMS"
-      };
-
-      // Ensure filter is checked so it's visible
-      document.getElementById('filterRed').checked = true;
-
-      // Replace if phone exists or unshift
-      MAP_MARKERS = MAP_MARKERS.filter(m => m.phone !== phone);
-      MAP_MARKERS.unshift(newVictim);
-
-      closeModal('modal-sms-sim');
-      refreshMapMarkers();
-      renderDispatchQueue();
-
-      // Zoom straight to the parsed coordinates
-      locateByPhone(phone);
-      alert(`✅ INBOUND SMS PARSED & PINNED!\n\nFrom: +91 ${phone}\nCoordinates: ${lat.toFixed(4)}, ${lon.toFixed(4)}\nStatus: 🔴 RED DOT pinned on map.`);
-    }
-
-    function renderDispatchQueue() {
-      const tbody = document.getElementById('dispatchTableBody');
-      tbody.innerHTML = "";
-
-      // Sort with Red first, then Yellow, then Grey, then Green
-      const sorted = [...MAP_MARKERS].sort((a, b) => {
-        const order = { red: 1, yellow: 2, grey: 3, green: 4 };
-        return order[a.color] - order[b.color];
-      });
-
-      sorted.forEach(m => {
-        const tr = document.createElement('tr');
-        tr.className = "border-b border-slate-800/80 hover:bg-slate-800/30 text-xs";
-
-        let badgeColor = "bg-red-500/20 text-red-400 border-red-500/30";
-        if (m.color === 'yellow') badgeColor = "bg-amber-500/20 text-amber-400 border-amber-500/30";
-        if (m.color === 'green') badgeColor = "bg-emerald-500/20 text-emerald-400 border-emerald-500/30";
-        if (m.color === 'grey') badgeColor = "bg-slate-700/50 text-slate-300 border-slate-600";
-
-        tr.innerHTML = `
-          <td class="py-2.5 px-3">
-            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${badgeColor}">
-              ● ${m.color.toUpperCase()}
-            </span>
-          </td>
-          <td class="py-2.5 px-3 font-semibold text-white">${m.name}</td>
-          <td class="py-2.5 px-3 font-mono text-slate-300">${m.phone}</td>
-          <td class="py-2.5 px-3 font-mono text-[11px] text-blue-300">${m.lat.toFixed(4)}, ${m.lon.toFixed(4)}</td>
-          <td class="py-2.5 px-3 font-mono text-[11px] text-slate-400">${m.trigger}</td>
-          <td class="py-2.5 px-3 font-mono text-[11px]">${m.battery}%</td>
-          <td class="py-2.5 px-3 text-right">
-            <button onclick="alert('Dispatched Field Rescue Team to ${m.lat.toFixed(4)}, ${m.lon.toFixed(4)} for victim ${m.name} via Module 4 OR-Tools.')" class="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px]">
-              Dispatch Team
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    // 5-Minute Coordinate Batch Sync Timer
-    function start5MinRescueTimer() {
-      clearInterval(syncTimerInterval);
-      syncSecondsLeft = 300;
-      syncTimerInterval = setInterval(() => {
-        syncSecondsLeft--;
-        const min = Math.floor(syncSecondsLeft / 60);
-        const sec = syncSecondsLeft % 60;
-        const timeStr = `Sync: 0${min}:${sec < 10 ? '0' : ''}${sec}`;
-        document.getElementById('nav5MinSyncTimer').innerText = timeStr;
-
-        if (syncSecondsLeft <= 0) {
-          triggerManual5MinSync();
-          syncSecondsLeft = 300;
-        }
-      }, 1000);
-    }
-
-    function triggerManual5MinSync() {
-      refreshMapMarkers();
-      renderDispatchQueue();
-      alert("⏱️ 5-MINUTE BATCH SYNC EXECUTED!\n\n1. Collected live coordinates of all Red and Yellow victims.\n2. Ingested latest Grey dot pings from Find My Device API.\n3. Dispatched update package to Field Rescue Officers (rescue123).");
-    }
-
-    // ==============================================================
-    // 5. CITIZEN AUTHENTICATION & DEFAULT FLOW
-    // ==============================================================
-    let regOtpCode = "123456";
-    let isRegOtpVerified = false;
-
-    function handleSendOTP() {
-      const p = document.getElementById('regPhone').value.trim();
-      if (!/^[6-9]\d{9}$/.test(p)) { alert("Enter valid 10-digit number"); return; }
-      regOtpCode = Math.floor(100000 + Math.random() * 900000).toString();
-      document.getElementById('demoOtp').innerText = regOtpCode;
-      document.getElementById('otpDrawer').classList.remove('hidden');
-    }
-
-    function handleVerifyOTP() {
-      isRegOtpVerified = true;
-      document.getElementById('otpDrawer').classList.add('hidden');
-      document.getElementById('btnSendOtp').classList.add('hidden');
-      document.getElementById('tagOtpVerified').classList.remove('hidden');
-    }
-
-    function handleCitizenRegister(e) {
-      e.preventDefault();
-      const u = document.getElementById('regUsername').value.trim();
-      const p = document.getElementById('regPassword').value;
-      const cp = document.getElementById('regConfirmPassword').value;
-      const ph = document.getElementById('regPhone').value.trim();
-      const err = document.getElementById('regError');
-
-      if (p !== cp) { err.innerText = "Passwords do not match."; err.classList.remove('hidden'); return; }
-      if (!isRegOtpVerified) { err.innerText = "Please verify phone with OTP."; err.classList.remove('hidden'); return; }
-
-      activeCitizen = {
-        username: u,
-        phone: ph,
-        status: "SAFE",
-        lat: 28.6139 + (Math.random() * 0.04 - 0.02),
-        lon: 77.2090 + (Math.random() * 0.04 - 0.02)
-      };
-
-      // Ensure newly registered citizen is immediately plotted in rescue map markers!
-      const uKey = u.toLowerCase();
-      const newCitizenMarker = {
-        id: "citizen_" + uKey,
-        name: `@${u}`,
-        phone: ph,
-        color: "green",
-        category: "Confirmed Safe",
-        lat: activeCitizen.lat,
-        lon: activeCitizen.lon,
-        trigger: "REGISTRATION",
-        battery: 100,
-        lastUpdate: "Just registered"
-      };
-      const exIdx = MAP_MARKERS.findIndex(m => m.id === "citizen_" + uKey || (m.name && m.name.toLowerCase().includes(uKey)));
-      if (exIdx >= 0) MAP_MARKERS[exIdx] = newCitizenMarker;
-      else MAP_MARKERS.unshift(newCitizenMarker);
-      saveLoadedMarkers();
-
-      // Dispatch to FastAPI backend in background if available
-      if (navigator.onLine) {
-        fetch(API_BASE + "/api/v1/citizen/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: u, password: p, phone: ph })
-        }).catch(err => console.warn("Backend API sync optional:", err));
-      }
-
-      closeModal('modal-register');
-      localStorage.setItem(SESSION_ROLE_KEY, 'CITIZEN');
-      localStorage.setItem(CITIZEN_USER_KEY, JSON.stringify(activeCitizen));
-      openCitizenDashboard();
-      alert(`Welcome @${u}! Registration complete. Opening your crisis dashboard.`);
-    }
-
-    function handleCitizenLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('loginUsername').value.trim();
-      closeModal('modal-login');
-      activeCitizen.username = u;
-      localStorage.setItem(SESSION_ROLE_KEY, 'CITIZEN');
-      localStorage.setItem(CITIZEN_USER_KEY, JSON.stringify(activeCitizen));
-      openCitizenDashboard();
-    }
-
-    function openCitizenDashboard() {
-      document.getElementById('view-landing').classList.add('hidden');
-      document.getElementById('view-rescue-dashboard').classList.add('hidden');
-      document.getElementById('view-citizen-dashboard').classList.remove('hidden');
-
-      document.getElementById('navPublicButtons').classList.add('hidden');
-      document.getElementById('navRescueBadge').classList.add('hidden');
-      document.getElementById('navRescueLogoutBtn').classList.add('hidden');
-      document.getElementById('navCitizenTabs').classList.remove('hidden');
-      document.getElementById('navUserProfile').classList.remove('hidden');
-
-      document.getElementById('navUsername').innerText = `@${activeCitizen.username}`;
-      document.getElementById('navUserInitial').innerText = activeCitizen.username.charAt(0).toUpperCase();
-      document.getElementById('menuUsername').innerText = `@${activeCitizen.username}`;
-      document.getElementById('menuPhone').innerText = `+91 ${activeCitizen.phone}`;
-
-      updateCitizenUI(activeCitizen.status);
-      switchCitizenTab('sos');
-      renderCitizenHospitals();
-      startCitizenTracking();
-    }
-
-    function switchCitizenTab(tab) {
-      const isSos = tab === 'sos';
-      document.getElementById('tabContentSos').classList.toggle('hidden', !isSos);
-      document.getElementById('tabContentHospital').classList.toggle('hidden', isSos);
-      document.getElementById('tabBtnSos').className = isSos ? "px-3.5 py-1.5 rounded-lg bg-blue-600 text-white shadow" : "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white";
-      document.getElementById('tabBtnHospital').className = !isSos ? "px-3.5 py-1.5 rounded-lg bg-blue-600 text-white shadow" : "px-3.5 py-1.5 rounded-lg text-slate-400 hover:text-white";
-    }
-
-    function renderCitizenHospitals() {
-      const grid = document.getElementById('citizenHospitalGrid');
-      grid.innerHTML = "";
-      HOSPITALS.forEach(h => {
-        const item = document.createElement('div');
-        item.className = "p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5 text-xs";
-        item.innerHTML = `
-          <div class="flex justify-between font-bold">
-            <span class="text-white">${h.name}</span>
-            <span class="text-blue-400 font-mono text-[11px]">${h.dist}</span>
-          </div>
-          <div class="grid grid-cols-2 gap-1 text-[11px] text-slate-300">
-            <span>🛏️ Beds: <strong class="text-emerald-400">${h.beds} Gen | ${h.icu} ICU</strong></span>
-            <span>🚑 Ambulance: <strong class="text-blue-400">${h.amb}/${h.maxAmb}</strong></span>
-            <span>📦 Food: <strong>${h.food} pks</strong></span>
-            <span>💊 Meds: <strong>${h.meds} units</strong></span>
-          </div>
-        `;
-        grid.appendChild(item);
-      });
-    }
-
-    function handleProfileSave(e) {
-      e.preventDefault();
-      closeModal('modal-profile');
-      alert("Emergency Profile Saved! Parent, Guardian, and Village records synced with Rescue Command.");
-    }
-
-    function handleLogout() {
-      localStorage.removeItem(SESSION_ROLE_KEY);
-      clearInterval(syncTimerInterval);
-      clearInterval(serverSyncInterval);
-      stopCitizenTracking();
-      document.getElementById('view-citizen-dashboard').classList.add('hidden');
-      document.getElementById('view-rescue-dashboard').classList.add('hidden');
-      document.getElementById('view-landing').classList.remove('hidden');
-
-      document.getElementById('navCitizenTabs').classList.add('hidden');
-      document.getElementById('navUserProfile').classList.add('hidden');
-      document.getElementById('navRescueBadge').classList.add('hidden');
-      document.getElementById('navRescueLogoutBtn').classList.add('hidden');
-      document.getElementById('navPublicButtons').classList.remove('hidden');
-      closeModal('profileDropdown');
-    }
-
-    function handleBrandClick() {
-      const role = localStorage.getItem(SESSION_ROLE_KEY);
-      if (role === 'RESCUE_ADMIN') openRescueDashboard();
-      else if (role === 'CITIZEN') openCitizenDashboard();
-      else {
-        document.getElementById('view-landing').classList.remove('hidden');
-        document.getElementById('view-citizen-dashboard').classList.add('hidden');
-        document.getElementById('view-rescue-dashboard').classList.add('hidden');
-      }
-    }
-
-    // ==============================================================
-    // INITIALIZATION (AUTO-LOGIN CHECK)
-    // ==============================================================
-    window.addEventListener('DOMContentLoaded', () => {
-      initShakeDetection();
-      loadPublicConfig();
-      if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-        navigator.serviceWorker.register('/sw.js').catch(err => console.warn('Offline mode unavailable:', err));
-      }
-
-      // Check session
-      const role = localStorage.getItem(SESSION_ROLE_KEY);
-      if (role === 'RESCUE_ADMIN') {
-        openRescueDashboard();
-      } else if (role === 'CITIZEN') {
-        try {
-          const c = JSON.parse(localStorage.getItem(CITIZEN_USER_KEY));
-          if (c && c.username) {
-            activeCitizen = c;
-            // Ensure this citizen is registered in the map markers!
-            const uKey = (c.username || "").toLowerCase();
-            const existsInMarkers = MAP_MARKERS.some(m => m.id === "citizen_" + uKey || (m.name && m.name.toLowerCase().includes(uKey)));
-            if (!existsInMarkers) {
-              MAP_MARKERS.unshift({
-                id: "citizen_" + uKey,
-                name: `@${c.username}`,
-                phone: c.phone || "9876543210",
-                color: c.status === 'HELP' ? 'red' : 'green',
-                category: c.status === 'HELP' ? 'Danger (SOS Active)' : 'Confirmed Safe',
-                lat: c.lat || 28.6190,
-                lon: c.lon || 77.2150,
-                trigger: "CHECKIN",
-                battery: 95,
-                lastUpdate: "Live on Dashboard"
-              });
-              saveLoadedMarkers();
-            }
-          }
-        } catch (e) { }
-        openCitizenDashboard();
-      } else {
-        // Default to citizen dashboard for testing, or landing
-        openCitizenDashboard();
-      }
-    });
-  </script>
+  <section id="smsPanel" class="hidden mx-auto my-4 max-w-lg p-4 rounded-xl bg-slate-900 border border-slate-800" aria-label="SMS fallback">
+    <p id="smsNotice" class="text-sm whitespace-pre-wrap" role="status"></p>
+    <a id="smsLink" class="hidden text-blue-300 underline">Open SMS app</a>
+    <button type="button" class="ml-3 text-slate-300" onclick="closeModal('smsPanel')">Close</button>
+  </section>
+  <script src="/app.js"></script>
 </body>
 
 </html>
