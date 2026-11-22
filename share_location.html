@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Share Location – DisasterOps</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; }
+    main { max-width: 420px; margin: 0 auto; padding: 32px 16px; text-align: center; }
+    h1 { font-size: 20px; margin-bottom: 8px; }
+    p { color: #94a3b8; font-size: 14px; line-height: 1.5; }
+    button { width: 100%; padding: 16px; font-size: 17px; font-weight: 700; border: 0; border-radius: 12px;
+             background: #dc2626; color: #fff; margin-top: 16px; cursor: pointer; }
+    button:disabled { opacity: .6; }
+    #msg { margin-top: 20px; font-size: 14px; white-space: pre-line; }
+    .ok { color: #34d399; } .err { color: #f87171; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>🚨 DisasterOps Rescue</h1>
+  <p>A rescue team has asked for your location. Tap the button and choose <b>Allow</b> when your phone asks.</p>
+  <button id="shareBtn">📍 Share my location</button>
+  <div id="msg"></div>
+</main>
+<script>
+  const token = new URLSearchParams(location.search).get('t');
+  const btn = document.getElementById('shareBtn');
+  const msg = document.getElementById('msg');
+
+  function show(text, cls) { msg.className = cls || ''; msg.textContent = text; }
+
+  if (!token) { btn.disabled = true; show('This link is incomplete. Ask the rescue team to resend it.', 'err'); }
+
+  btn.addEventListener('click', () => {
+    if (!navigator.geolocation) { show('Your browser cannot read location.', 'err'); return; }
+    btn.disabled = true;
+    show('Getting your GPS position…');
+
+    navigator.geolocation.getCurrentPosition(async pos => {
+      const { latitude, longitude, accuracy } = pos.coords;
+      show(`Position found (±${Math.round(accuracy)} m). Sending…`);
+      try {
+        const res = await fetch('/api/v1/locate/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, latitude, longitude, accuracy_meters: accuracy })
+        });
+        if (!res.ok) throw new Error((await res.json()).detail || res.status);
+        show(`✅ Location sent to the rescue team.\n${latitude.toFixed(5)}, ${longitude.toFixed(5)} (±${Math.round(accuracy)} m)`, 'ok');
+      } catch (e) {
+        btn.disabled = false;
+        show(`Could not send (no internet?). Send this SMS instead:\nDISASTEROPS SOS Lat: ${latitude.toFixed(5)} Lon: ${longitude.toFixed(5)}`, 'err');
+      }
+    }, err => {
+      btn.disabled = false;
+      const reasons = { 1: 'Location permission was denied. Allow it in browser settings and try again.',
+                        2: 'Location unavailable. Turn on GPS / Location and try again.',
+                        3: 'Timed out. Move near a window or outdoors and try again.' };
+      show(reasons[err.code] || err.message, 'err');
+    }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 });
+  });
+</script>
+</body>
+</html>

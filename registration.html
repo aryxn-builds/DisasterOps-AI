@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DisasterOps AI - Progressive Citizen Onboarding & Verification</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-dark: #1e293b;
+      --border-dark: #334155;
+    }
+    body {
+      background: radial-gradient(circle at top, #1e293b 0%, #0b1120 100%);
+      color: #f8fafc;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    .input-box {
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      transition: all 0.2s ease;
+    }
+    .input-box:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    }
+    .tab-chip {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .tab-chip.active {
+      background-color: #2563eb;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+    .tab-chip.inactive {
+      background-color: #0f172a;
+      color: #94a3b8;
+      border-color: #334155;
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center p-3 sm:p-6 md:p-8">
+
+  <!-- Main Container -->
+  <div class="w-full max-w-2xl bg-[#1e293b] border border-[#334155] rounded-2xl shadow-2xl overflow-hidden relative">
+
+    <!-- Top Header & Live Progress -->
+    <div class="p-5 sm:p-6 border-b border-[#334155] bg-slate-900/40">
+      <div class="flex items-center justify-between pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold text-lg">
+            🛡️
+          </div>
+          <div>
+            <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white">DisasterOps AI</h1>
+            <p class="text-xs text-slate-400">Emergency Citizen Registration & Preparedness System</p>
+          </div>
+        </div>
+        <!-- Readiness Badge -->
+        <div class="text-right">
+          <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">Readiness</span>
+          <span id="readinessBadge" class="text-xs font-mono font-bold text-blue-400">25% (Basic)</span>
+        </div>
+      </div>
+
+      <!-- Readiness Progress Bar -->
+      <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+        <div id="readinessBar" class="bg-gradient-to-r from-blue-600 to-emerald-500 h-2 rounded-full transition-all duration-500" style="width: 25%"></div>
+      </div>
+
+      <!-- Step Breadcrumb Tabs -->
+      <div class="flex items-center justify-between text-xs text-slate-400 mt-3 pt-2 border-t border-slate-800/80">
+        <span id="breadcrumb-1" class="font-semibold text-blue-400">1. Express Setup</span>
+        <span class="text-slate-600">→</span>
+        <span id="breadcrumb-2" class="text-slate-500">2. Emergency Permissions</span>
+        <span class="text-slate-600">→</span>
+        <span id="breadcrumb-3" class="text-slate-500">3. ID & Guardians</span>
+        <span class="text-slate-600">→</span>
+        <span id="breadcrumb-4" class="text-slate-500">4. Ready Pass</span>
+      </div>
+    </div>
+
+    <!-- Container Body -->
+    <div class="p-5 sm:p-8">
+
+      <!-- ============================================================== -->
+      <!-- STAGE 1: EXPRESS ONBOARDING (Fast Sign-up + OTP + 2 Addresses) -->
+      <!-- ============================================================== -->
+      <div id="stage-1" class="space-y-5">
+        <div>
+          <div class="flex items-center justify-between">
+            <h2 class="text-base sm:text-lg font-bold text-white">Stage 1: Express Citizen Setup</h2>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/30">
+              ⚡ ~45 seconds
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">Basic contact info and addresses to locate you during immediate alerts.</p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- User Name & Email -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">
+                Full Name <span class="text-red-400">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="userName" 
+                placeholder="e.g., Keshav Sharma" 
+                class="w-full px-3.5 py-2.5 rounded-lg input-box text-sm"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">
+                Email Address <span class="text-red-400">*</span>
+              </label>
+              <input 
+                type="email" 
+                id="userEmail" 
+                placeholder="e.g., keshav@example.com" 
+                class="w-full px-3.5 py-2.5 rounded-lg input-box text-sm"
+              />
+            </div>
+          </div>
+
+          <!-- Phone Number & OTP Section -->
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-700/60 space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <label class="block text-xs font-semibold text-slate-300 uppercase">
+                Mobile Number & OTP Verification <span class="text-red-400">*</span>
+              </label>
+              <span id="phoneVerifiedBadge" class="hidden text-xs text-emerald-400 font-semibold flex items-center gap-1">
+                ✓ Verified via OTP
+              </span>
+            </div>
+
+            <div class="flex gap-2">
+              <span class="inline-flex items-center px-3 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 text-sm font-mono">+91</span>
+              <input 
+                type="tel" 
+                id="userPhone" 
+                maxlength="10" 
+                placeholder="10-digit mobile number" 
+                class="w-full px-3 py-2 rounded-lg input-box text-sm font-mono"
+              />
+              <button 
+                type="button" 
+                id="sendOtpBtn" 
+                onclick="sendOTP()" 
+                class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs whitespace-nowrap transition-all shadow-md shadow-blue-600/20"
+              >
+                Send OTP
+              </button>
+            </div>
+
+            <!-- OTP Input Drawer (hidden until sent) -->
+            <div id="otpDrawer" class="hidden pt-2 border-t border-slate-800 space-y-2">
+              <div class="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between">
+                <span>📲 Demo Code: <strong id="demoOtpCode" class="font-mono text-amber-100 text-sm">123456</strong></span>
+                <button type="button" onclick="autoFillOTP()" class="text-[11px] underline text-amber-400">One-Tap Fill</button>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <input 
+                  type="text" 
+                  id="otpInput" 
+                  maxlength="6" 
+                  placeholder="Enter 6-digit OTP" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-sm text-center font-mono tracking-widest font-bold"
+                />
+                <button 
+                  type="button" 
+                  onclick="verifyOTP()" 
+                  class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs transition-all whitespace-nowrap"
+                >
+                  Verify Code
+                </button>
+              </div>
+              <p id="otpStatus" class="text-xs text-red-400 hidden"></p>
+            </div>
+          </div>
+
+          <!-- Address 1: Where they live -->
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/60 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+                <span>📍</span> Address 1: Current Residence (Where you live now) <span class="text-red-400">*</span>
+              </span>
+              <button 
+                type="button" 
+                onclick="autoDetectGPS()" 
+                class="text-[11px] px-2.5 py-1 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center gap-1 transition-all"
+              >
+                <span>🧭</span> <span id="gpsBtnText">Autofill with GPS</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div class="sm:col-span-2">
+                <input 
+                  type="text" 
+                  id="addr1Street" 
+                  placeholder="Flat / House No., Building, Street Name" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+                />
+              </div>
+              <div>
+                <input 
+                  type="text" 
+                  id="addr1City" 
+                  placeholder="City / Town (e.g. New Delhi)" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+                />
+              </div>
+              <div>
+                <input 
+                  type="text" 
+                  id="addr1State" 
+                  placeholder="State (e.g. Delhi)" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+                />
+              </div>
+              <div>
+                <input 
+                  type="text" 
+                  id="addr1Pincode" 
+                  maxlength="6" 
+                  placeholder="6-digit PIN Code" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm font-mono"
+                />
+              </div>
+              <div>
+                <input 
+                  type="text" 
+                  id="addr1Landmark" 
+                  placeholder="Landmark (e.g. Near Metro Stn)" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Address 2: Village / Gau Address (Native place) -->
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/60 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                <span>🌾</span> Address 2: Native Village / Hometown (गांव का पता)
+              </span>
+            </div>
+
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input 
+                type="checkbox" 
+                id="hasVillageToggle" 
+                checked 
+                onchange="toggleVillageBlock()" 
+                class="rounded w-4 h-4 text-blue-600 bg-slate-800 border-slate-600"
+              />
+              <span class="text-xs text-slate-300">
+                I have a native village / ancestral home address (helps link rural alerts & evacuation)
+              </span>
+            </label>
+
+            <div id="villageBlock" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+              <div>
+                <input 
+                  type="text" 
+                  id="vName" 
+                  placeholder="Village / Gaon Name (गांव का नाम)" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+                />
+              </div>
+              <div>
+                <input 
+                  type="text" 
+                  id="vDistrict" 
+                  placeholder="District (ज़िला)" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+                />
+              </div>
+              <div>
+                <input 
+                  type="text" 
+                  id="vState" 
+                  placeholder="State (राज्य)" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+                />
+              </div>
+              <div>
+                <input 
+                  type="text" 
+                  id="vPanchayat" 
+                  placeholder="Gram Panchayat / Post (Optional)" 
+                  class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p id="stage1Error" class="text-xs text-red-400 hidden"></p>
+
+        <!-- Submit Stage 1 Button -->
+        <div class="pt-3 flex justify-end">
+          <button 
+            type="button" 
+            onclick="completeStage1()" 
+            class="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs sm:text-sm transition-all shadow-lg shadow-blue-600/30 flex items-center gap-2"
+          >
+            <span>Save & Proceed to Permissions</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
+
+      <!-- ============================================================== -->
+      <!-- STAGE 2: FIRST-TIME LOGIN EMERGENCY PERMISSIONS & POLICY       -->
+      <!-- ============================================================== -->
+      <div id="stage-2" class="space-y-5 hidden">
+        <div>
+          <div class="flex items-center justify-between">
+            <h2 class="text-base sm:text-lg font-bold text-white">Stage 2: Emergency Policy & Phone Settings</h2>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+              🛡️ First-Time Login Consent
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">
+            To rescue you when internet or mobile networks fail, DisasterOps AI requires these life-safety permissions.
+          </p>
+        </div>
+
+        <!-- 4 Core Permission Cards -->
+        <div class="space-y-3">
+
+          <!-- 1. Location Setting -->
+          <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-700/60 flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center text-lg flex-shrink-0">
+              📍
+            </div>
+            <div class="flex-1 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-white text-sm">Background Location Setting</span>
+                <input type="checkbox" id="permLocation" checked class="w-4 h-4 text-blue-600 rounded bg-slate-800" />
+              </div>
+              <p class="text-slate-400 mt-1">
+                Enables rescue teams to pinpoint your exact coordinates on the Dynamic Map (Module 3) and auto-send a <strong>last-gasp ping</strong> when your phone battery drops below 5%.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2. Call Recorder / Emergency Audio Log -->
+          <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-700/60 flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center text-lg flex-shrink-0">
+              🎙️
+            </div>
+            <div class="flex-1 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-white text-sm">Emergency Call & Distress Audio Recorder</span>
+                <input type="checkbox" id="permCallRecord" checked class="w-4 h-4 text-blue-600 rounded bg-slate-800" />
+              </div>
+              <p class="text-slate-400 mt-1">
+                Records emergency helpline calls and distress voice notes so Module 5 AI can verify genuine panic/distress signals and prioritize trapped victims.
+              </p>
+            </div>
+          </div>
+
+          <!-- 3. Microphone Access -->
+          <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-700/60 flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-lg flex-shrink-0">
+              🔊
+            </div>
+            <div class="flex-1 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-white text-sm">Microphone & Acoustic Sound Beacon</span>
+                <input type="checkbox" id="permMic" checked class="w-4 h-4 text-blue-600 rounded bg-slate-800" />
+              </div>
+              <p class="text-slate-400 mt-1">
+                Allows rescue teams to remotely trigger your phone's acoustic whistle sound beacon to detect you under rubble, debris, or floodwaters.
+              </p>
+            </div>
+          </div>
+
+          <!-- 4. Emergency SMS Dispatch -->
+          <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-700/60 flex items-start gap-3">
+            <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-lg flex-shrink-0">
+              💬
+            </div>
+            <div class="flex-1 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-white text-sm">Emergency Offline SMS Dispatch</span>
+                <input type="checkbox" id="permSMS" checked class="w-4 h-4 text-blue-600 rounded bg-slate-800" />
+              </div>
+              <p class="text-slate-400 mt-1">
+                Sends automated SOS packets via cellular SMS to emergency cloud relays when internet is severed (Module 1 fallback).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms and Policy Checkbox -->
+        <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 text-xs text-slate-300 space-y-2">
+          <label class="flex items-start gap-2.5 cursor-pointer">
+            <input type="checkbox" id="termsCheck" checked class="mt-0.5 w-4 h-4 text-blue-600 rounded bg-slate-800" />
+            <span>
+              I accept the <strong>DisasterOps Emergency Response Terms & Privacy Policy</strong>. My location and sensor signals will only be activated during active regional disaster alerts or when I trigger the SOS button.
+            </span>
+          </label>
+        </div>
+
+        <p id="stage2Error" class="text-xs text-red-400 hidden"></p>
+
+        <!-- Stage 2 Navigation -->
+        <div class="pt-3 flex items-center justify-between">
+          <button 
+            type="button" 
+            onclick="switchStage(1)" 
+            class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium"
+          >
+            ← Back
+          </button>
+          <button 
+            type="button" 
+            onclick="completeStage2()" 
+            class="px-6 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs sm:text-sm transition-all shadow-lg shadow-emerald-600/30 flex items-center gap-2"
+          >
+            <span>Accept Policies & Continue</span>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
+
+      <!-- ============================================================== -->
+      <!-- STAGE 3: GOVT ID & FAMILY GUARDIAN LINKING (Anti-Fatigue Form) -->
+      <!-- ============================================================== -->
+      <div id="stage-3" class="space-y-5 hidden">
+        <div>
+          <div class="flex items-center justify-between">
+            <h2 class="text-base sm:text-lg font-bold text-white">Stage 3: Identity & Emergency Guardians</h2>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/30">
+              Family & Verification
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Select one official ID to verify your profile, and add emergency family contacts with single-click address cloning.
+          </p>
+        </div>
+
+        <!-- 1. Government Identity Selector (Single Choice) -->
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/60 space-y-3">
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+            Choose Identity Document Type (Select One)
+          </label>
+          <div class="flex flex-wrap gap-2">
+            <div id="chip-aadhaar" onclick="selectIdType('aadhaar')" class="tab-chip active px-3.5 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5">
+              <span>🆔</span> Aadhaar Card
+            </div>
+            <div id="chip-pan" onclick="selectIdType('pan')" class="tab-chip inactive px-3.5 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5">
+              <span>💳</span> PAN Card
+            </div>
+            <div id="chip-voter" onclick="selectIdType('voter')" class="tab-chip inactive px-3.5 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5">
+              <span>🗳️</span> Voter ID (EPIC)
+            </div>
+          </div>
+
+          <!-- Dynamic Document Input -->
+          <div class="pt-1">
+            <div id="aadhaarField">
+              <label class="block text-[11px] text-slate-400 mb-1">12-Digit Aadhaar Number</label>
+              <input 
+                type="text" 
+                id="idAadhaar" 
+                maxlength="14" 
+                placeholder="XXXX-XXXX-XXXX" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm font-mono tracking-wider"
+              />
+            </div>
+            <div id="panField" class="hidden">
+              <label class="block text-[11px] text-slate-400 mb-1">10-Digit Alphanumeric PAN Number</label>
+              <input 
+                type="text" 
+                id="idPan" 
+                maxlength="10" 
+                placeholder="e.g. ABCDE1234F" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm font-mono uppercase"
+              />
+            </div>
+            <div id="voterField" class="hidden">
+              <label class="block text-[11px] text-slate-400 mb-1">Voter ID Card Number (EPIC)</label>
+              <input 
+                type="text" 
+                id="idVoter" 
+                maxlength="16" 
+                placeholder="e.g. WBF1234567" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm font-mono uppercase"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Parent Contact & Smart Address Inheritance -->
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/60 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+              <span>👨‍👩‍👧</span> Parent Contact Details
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <input 
+                type="text" 
+                id="parentName" 
+                placeholder="Father's / Mother's Name" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+              />
+            </div>
+            <div class="flex gap-2">
+              <span class="inline-flex items-center px-2.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 text-xs font-mono">+91</span>
+              <input 
+                type="tel" 
+                id="parentPhone" 
+                maxlength="10" 
+                placeholder="Parent Mobile Number" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm font-mono"
+              />
+            </div>
+          </div>
+
+          <!-- Parent Address Selector (Anti-Fatigue) -->
+          <div class="pt-1">
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Parent's Residential Address:</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-800/80 border border-slate-700 cursor-pointer">
+                <input type="radio" name="parentAddrChoice" value="residence" checked onchange="handleParentAddrChoice()" class="text-blue-600" />
+                <span class="text-slate-300 text-[11px]">Same as Current (Address 1)</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-800/80 border border-slate-700 cursor-pointer">
+                <input type="radio" name="parentAddrChoice" value="village" onchange="handleParentAddrChoice()" class="text-blue-600" />
+                <span class="text-slate-300 text-[11px]">Same as Village (Address 2)</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-800/80 border border-slate-700 cursor-pointer">
+                <input type="radio" name="parentAddrChoice" value="custom" onchange="handleParentAddrChoice()" class="text-blue-600" />
+                <span class="text-slate-300 text-[11px]">Different Address</span>
+              </label>
+            </div>
+            <!-- Custom Parent Address Box (hidden by default) -->
+            <div id="parentCustomBox" class="hidden mt-2 pt-1">
+              <input 
+                type="text" 
+                id="parentCustomAddr" 
+                placeholder="Enter parent's specific house, street, city & state" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Guardian / Secondary Contact & Smart Address Inheritance -->
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-700/60 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+              <span>🤝</span> Guardian / Secondary Emergency Contact
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div>
+              <input 
+                type="text" 
+                id="guardianName" 
+                placeholder="Guardian Full Name" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+              />
+            </div>
+            <div class="flex gap-2">
+              <span class="inline-flex items-center px-2.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 text-xs font-mono">+91</span>
+              <input 
+                type="tel" 
+                id="guardianPhone" 
+                maxlength="10" 
+                placeholder="Guardian Mobile" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm font-mono"
+              />
+            </div>
+            <div>
+              <input 
+                type="text" 
+                id="guardianRelation" 
+                placeholder="Relation (e.g. Uncle / Landlord)" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+              />
+            </div>
+          </div>
+
+          <!-- Guardian Address Selector (Anti-Fatigue) -->
+          <div class="pt-1">
+            <label class="block text-[11px] font-semibold text-slate-300 mb-1">Guardian's Residential Address:</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-800/80 border border-slate-700 cursor-pointer">
+                <input type="radio" name="guardianAddrChoice" value="parent" checked onchange="handleGuardianAddrChoice()" class="text-blue-600" />
+                <span class="text-slate-300 text-[11px]">Same as Parent Address</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-800/80 border border-slate-700 cursor-pointer">
+                <input type="radio" name="guardianAddrChoice" value="residence" onchange="handleGuardianAddrChoice()" class="text-blue-600" />
+                <span class="text-slate-300 text-[11px]">Same as Current (Address 1)</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-800/80 border border-slate-700 cursor-pointer">
+                <input type="radio" name="guardianAddrChoice" value="custom" onchange="handleGuardianAddrChoice()" class="text-blue-600" />
+                <span class="text-slate-300 text-[11px]">Different Address</span>
+              </label>
+            </div>
+            <!-- Custom Guardian Address Box (hidden by default) -->
+            <div id="guardianCustomBox" class="hidden mt-2 pt-1">
+              <input 
+                type="text" 
+                id="guardianCustomAddr" 
+                placeholder="Enter guardian's street, city, state & pincode" 
+                class="w-full px-3 py-2 rounded-lg input-box text-xs sm:text-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        <p id="stage3Error" class="text-xs text-red-400 hidden"></p>
+
+        <!-- Final Submit Stage 3 -->
+        <div class="pt-3 flex items-center justify-between">
+          <button 
+            type="button" 
+            onclick="switchStage(2)" 
+            class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium"
+          >
+            ← Back
+          </button>
+          <button 
+            type="button" 
+            onclick="completeStage3()" 
+            class="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs sm:text-sm transition-all shadow-lg shadow-blue-600/30 flex items-center gap-2"
+          >
+            <span>Finish Registration & Generate Pass</span>
+            <span>✓</span>
+          </button>
+        </div>
+      </div>
+
+
+      <!-- ============================================================== -->
+      <!-- STAGE 4: COMPLETED DIGITAL DISASTER PASS & DASHBOARD           -->
+      <!-- ============================================================== -->
+      <div id="stage-4" class="space-y-6 hidden text-center py-2">
+        <div class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500 flex items-center justify-center text-2xl mx-auto shadow-lg shadow-emerald-500/30">
+          ✓
+        </div>
+        
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-white">Citizen Onboarding Complete!</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">Your emergency identity and guardian linkages are fully synced with DisasterOps AI.</p>
+        </div>
+
+        <!-- Digital Emergency Pass Card -->
+        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-blue-500/40 rounded-2xl p-5 text-left space-y-4 shadow-2xl">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-700">
+            <div>
+              <span class="text-[10px] uppercase font-bold tracking-wider text-blue-400">Official Citizen Emergency Pass</span>
+              <p id="cardPassId" class="font-mono font-bold text-lg text-white">DIS-2026-XXXX</p>
+            </div>
+            <div class="text-right">
+              <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 block">
+                ● 100% Prepared
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <span class="text-slate-400 block text-[11px]">Citizen Name:</span>
+              <strong id="cardCitizenName" class="text-slate-100 font-semibold text-sm">-</strong>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Primary Contact:</span>
+              <span id="cardCitizenContact" class="text-slate-200 font-mono">-</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Government ID:</span>
+              <span id="cardCitizenId" class="text-blue-300 font-mono font-bold">-</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[11px]">Emergency Sensors Active:</span>
+              <span class="text-emerald-400 font-medium">GPS, Mic Beacon, Offline SMS</span>
+            </div>
+            <div class="sm:col-span-2 pt-1 border-t border-slate-800">
+              <span class="text-slate-400 block text-[11px]">📍 Current Residence (Address 1):</span>
+              <p id="cardCitizenAddr1" class="text-slate-200 mt-0.5">-</p>
+            </div>
+            <div id="cardCitizenVillageRow" class="sm:col-span-2">
+              <span class="text-slate-400 block text-[11px]">🌾 Native Village / Gau (Address 2):</span>
+              <p id="cardCitizenVillage" class="text-emerald-300 mt-0.5">-</p>
+            </div>
+            <div class="pt-1 border-t border-slate-800">
+              <span class="text-slate-400 block text-[11px]">👨‍👩‍👧 Parent Contact & Location:</span>
+              <strong id="cardCitizenParent" class="text-slate-200 block mt-0.5">-</strong>
+              <p id="cardCitizenParentAddr" class="text-[11px] text-slate-400 mt-0.5">-</p>
+            </div>
+            <div class="pt-1 border-t border-slate-800">
+              <span class="text-slate-400 block text-[11px]">🤝 Guardian Contact & Location:</span>
+              <strong id="cardCitizenGuardian" class="text-slate-200 block mt-0.5">-</strong>
+              <p id="cardCitizenGuardianAddr" class="text-[11px] text-slate-400 mt-0.5">-</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Emergency Actions -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+          <button 
+            type="button" 
+            onclick="restartEverything()" 
+            class="px-5 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs sm:text-sm"
+          >
+            Register Another Profile
+          </button>
+          <button 
+            type="button" 
+            onclick="alert('🚨 TEST DISTRESS SIGNAL EMITTED!\n\n1. Coordinates dispatched to Module 3 Dynamic Map.\n2. Audio beacon triggered via phone speaker.\n3. SMS queued for Module 5 verification and Module 4 rescue priority routing.')" 
+            class="px-6 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium text-xs sm:text-sm shadow-lg shadow-red-600/30 flex items-center justify-center gap-2"
+          >
+            <span>🚨 Test 1-Tap Emergency SOS</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Client-Side JavaScript Application Logic -->
+  <script>
+    let activeIdType = 'aadhaar';
+    let currentStage = 1;
+    let isPhoneVerified = false;
+    let generatedOTP = "123456";
+
+    // Switch between stages (1, 2, 3, 4)
+    function switchStage(stage) {
+      [1, 2, 3, 4].forEach(s => {
+        const el = document.getElementById(`stage-${s}`);
+        if (el) el.classList.add('hidden');
+        const bc = document.getElementById(`breadcrumb-${s}`);
+        if (bc) {
+          if (s === stage) {
+            bc.className = "font-semibold text-blue-400";
+          } else if (s < stage) {
+            bc.className = "text-emerald-400 font-medium";
+          } else {
+            bc.className = "text-slate-500";
+          }
+        }
+      });
+
+      const target = document.getElementById(`stage-${stage}`);
+      if (target) target.classList.remove('hidden');
+
+      // Update Readiness Bar & Badge
+      const bar = document.getElementById('readinessBar');
+      const badge = document.getElementById('readinessBadge');
+      if (stage === 1) {
+        bar.style.width = '25%';
+        badge.innerText = '25% (Basic Info)';
+      } else if (stage === 2) {
+        bar.style.width = '50%';
+        badge.innerText = '50% (Permissions)';
+      } else if (stage === 3) {
+        bar.style.width = '75%';
+        badge.innerText = '75% (ID & Family)';
+      } else if (stage === 4) {
+        bar.style.width = '100%';
+        badge.innerText = '100% (Fully Ready)';
+      }
+
+      currentStage = stage;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // OTP Handlers
+    function sendOTP() {
+      const phone = document.getElementById('userPhone').value.trim();
+      if (!/^[6-9]\d{9}$/.test(phone)) {
+        alert("Please enter a valid 10-digit Indian phone number.");
+        return;
+      }
+      generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+      document.getElementById('demoOtpCode').innerText = generatedOTP;
+      document.getElementById('otpDrawer').classList.remove('hidden');
+      document.getElementById('sendOtpBtn').innerText = "Resend OTP";
+      document.getElementById('otpInput').focus();
+    }
+
+    function autoFillOTP() {
+      document.getElementById('otpInput').value = generatedOTP;
+      verifyOTP();
+    }
+
+    function verifyOTP() {
+      const entered = document.getElementById('otpInput').value.trim();
+      const statusEl = document.getElementById('otpStatus');
+      if (entered === generatedOTP || entered === "123456") {
+        isPhoneVerified = true;
+        document.getElementById('otpDrawer').classList.add('hidden');
+        document.getElementById('sendOtpBtn').classList.add('hidden');
+        document.getElementById('phoneVerifiedBadge').classList.remove('hidden');
+        document.getElementById('userPhone').readOnly = true;
+        statusEl.classList.add('hidden');
+      } else {
+        statusEl.innerText = "Incorrect code. Please enter the valid 6-digit OTP.";
+        statusEl.classList.remove('hidden');
+      }
+    }
+
+    // Auto-detect GPS for Address 1
+    function autoDetectGPS() {
+      const btn = document.getElementById('gpsBtnText');
+      if (navigator.geolocation) {
+        btn.innerText = "Locating...";
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            btn.innerText = "GPS Detected";
+            document.getElementById('addr1Street').value = `GPS Pos: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+            document.getElementById('addr1City').value = "Delhi NCR";
+            document.getElementById('addr1State').value = "Delhi";
+            document.getElementById('addr1Pincode').value = "110001";
+            document.getElementById('addr1Landmark').value = "Near detected coordinates";
+          },
+          (err) => {
+            btn.innerText = "Autofill with GPS";
+            alert("Location access refused or unavailable: " + err.message + ". Please enter address manually.");
+          }
+        );
+      } else {
+        alert("Geolocation is not supported by your browser.");
+      }
+    }
+
+    // Toggle Village address block
+    function toggleVillageBlock() {
+      const checked = document.getElementById('hasVillageToggle').checked;
+      document.getElementById('villageBlock').classList.toggle('hidden', !checked);
+    }
+
+    // Stage 1 Validation & Proceed
+    function completeStage1() {
+      const name = document.getElementById('userName').value.trim();
+      const email = document.getElementById('userEmail').value.trim();
+      const phone = document.getElementById('userPhone').value.trim();
+      const street = document.getElementById('addr1Street').value.trim();
+      const city = document.getElementById('addr1City').value.trim();
+      const state = document.getElementById('addr1State').value.trim();
+      const pin = document.getElementById('addr1Pincode').value.trim();
+      const err = document.getElementById('stage1Error');
+
+      if (!name || !email || !phone) {
+        err.innerText = "Please complete your full name, email, and phone number.";
+        err.classList.remove('hidden');
+        return;
+      }
+      if (!isPhoneVerified) {
+        err.innerText = "Please send and verify the OTP code for your phone number first.";
+        err.classList.remove('hidden');
+        return;
+      }
+      if (!street || !city || !state || !pin) {
+        err.innerText = "Please fill in all required fields for Address 1 (Current Residence).";
+        err.classList.remove('hidden');
+        return;
+      }
+
+      const hasVillage = document.getElementById('hasVillageToggle').checked;
+      const vName = document.getElementById('vName').value.trim();
+      const vDist = document.getElementById('vDistrict').value.trim();
+      const vState = document.getElementById('vState').value.trim();
+
+      if (hasVillage && (!vName || !vDist || !vState)) {
+        err.innerText = "Please fill in Village Name, District, and State for Address 2 (or uncheck the village box).";
+        err.classList.remove('hidden');
+        return;
+      }
+
+      err.classList.add('hidden');
+      switchStage(2);
+    }
+
+    // Stage 2 Validation (Permissions & Terms)
+    function completeStage2() {
+      const terms = document.getElementById('termsCheck').checked;
+      const err = document.getElementById('stage2Error');
+      if (!terms) {
+        err.innerText = "You must accept the DisasterOps Emergency Response terms and policy to continue.";
+        err.classList.remove('hidden');
+        return;
+      }
+      err.classList.add('hidden');
+      switchStage(3);
+    }
+
+    // ID Document Selection
+    function selectIdType(type) {
+      activeIdType = type;
+      ['aadhaar', 'pan', 'voter'].forEach(t => {
+        const chip = document.getElementById(`chip-${t}`);
+        if (chip) chip.className = t === type ? 'tab-chip active px-3.5 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5' : 'tab-chip inactive px-3.5 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1.5';
+      });
+
+      document.getElementById('aadhaarField').classList.toggle('hidden', type !== 'aadhaar');
+      document.getElementById('panField').classList.toggle('hidden', type !== 'pan');
+      document.getElementById('voterField').classList.toggle('hidden', type !== 'voter');
+    }
+
+    // Address choice handlers for Parent & Guardian
+    function handleParentAddrChoice() {
+      const selected = document.querySelector('input[name="parentAddrChoice"]:checked').value;
+      document.getElementById('parentCustomBox').classList.toggle('hidden', selected !== 'custom');
+    }
+
+    function handleGuardianAddrChoice() {
+      const selected = document.querySelector('input[name="guardianAddrChoice"]:checked').value;
+      document.getElementById('guardianCustomBox').classList.toggle('hidden', selected !== 'custom');
+    }
+
+    // Stage 3 Validation & Finish
+    function completeStage3() {
+      const err = document.getElementById('stage3Error');
+      const pName = document.getElementById('parentName').value.trim();
+      const pPhone = document.getElementById('parentPhone').value.trim();
+      const gName = document.getElementById('guardianName').value.trim();
+      const gPhone = document.getElementById('guardianPhone').value.trim();
+
+      // Check ID
+      let idDisplay = "";
+      if (activeIdType === 'aadhaar') {
+        const num = document.getElementById('idAadhaar').value.trim();
+        if (!num) {
+          err.innerText = "Please provide your Aadhaar Card number.";
+          err.classList.remove('hidden');
+          return;
+        }
+        idDisplay = `Aadhaar: ${num}`;
+      } else if (activeIdType === 'pan') {
+        const num = document.getElementById('idPan').value.trim();
+        if (!num) {
+          err.innerText = "Please provide your PAN Card number.";
+          err.classList.remove('hidden');
+          return;
+        }
+        idDisplay = `PAN: ${num.toUpperCase()}`;
+      } else if (activeIdType === 'voter') {
+        const num = document.getElementById('idVoter').value.trim();
+        if (!num) {
+          err.innerText = "Please provide your Voter ID number.";
+          err.classList.remove('hidden');
+          return;
+        }
+        idDisplay = `Voter ID: ${num.toUpperCase()}`;
+      }
+
+      if (!pName || !pPhone) {
+        err.innerText = "Please enter parent full name and phone number.";
+        err.classList.remove('hidden');
+        return;
+      }
+
+      err.classList.add('hidden');
+
+      // Populate Final Disaster Card
+      const citizenName = document.getElementById('userName').value.trim();
+      const citizenPhone = document.getElementById('userPhone').value.trim();
+      const citizenEmail = document.getElementById('userEmail').value.trim();
+      const street = document.getElementById('addr1Street').value.trim();
+      const city = document.getElementById('addr1City').value.trim();
+      const state = document.getElementById('addr1State').value.trim();
+      const pin = document.getElementById('addr1Pincode').value.trim();
+      const landmark = document.getElementById('addr1Landmark').value.trim();
+
+      document.getElementById('cardPassId').innerText = `DIS-${Math.floor(100000 + Math.random() * 900000)}`;
+      document.getElementById('cardCitizenName').innerText = citizenName;
+      document.getElementById('cardCitizenContact').innerText = `+91 ${citizenPhone} | ${citizenEmail}`;
+      document.getElementById('cardCitizenId').innerText = idDisplay;
+      document.getElementById('cardCitizenAddr1').innerText = `${street}, ${landmark ? landmark + ', ' : ''}${city}, ${state} - ${pin}`;
+
+      // Village
+      const hasVillage = document.getElementById('hasVillageToggle').checked;
+      const vRow = document.getElementById('cardCitizenVillageRow');
+      if (hasVillage) {
+        const vN = document.getElementById('vName').value.trim();
+        const vD = document.getElementById('vDistrict').value.trim();
+        const vS = document.getElementById('vState').value.trim();
+        const vP = document.getElementById('vPanchayat').value.trim();
+        vRow.classList.remove('hidden');
+        document.getElementById('cardCitizenVillage').innerText = `${vN}, ${vP ? vP + ', ' : ''}Dist: ${vD}, ${vS}`;
+      } else {
+        vRow.classList.add('hidden');
+      }
+
+      // Parent Address Resolution
+      const pAddrChoice = document.querySelector('input[name="parentAddrChoice"]:checked').value;
+      let pAddrText = "";
+      if (pAddrChoice === 'residence') pAddrText = "Address: Same as Current Residence (Address 1)";
+      else if (pAddrChoice === 'village') pAddrText = "Address: Same as Native Village (Address 2)";
+      else pAddrText = `Address: ${document.getElementById('parentCustomAddr').value.trim() || 'Custom'}`;
+
+      document.getElementById('cardCitizenParent').innerText = `${pName} (+91 ${pPhone})`;
+      document.getElementById('cardCitizenParentAddr').innerText = pAddrText;
+
+      // Guardian Address Resolution
+      const gRelation = document.getElementById('guardianRelation').value.trim() || 'Guardian';
+      const gAddrChoice = document.querySelector('input[name="guardianAddrChoice"]:checked').value;
+      let gAddrText = "";
+      if (gAddrChoice === 'parent') gAddrText = "Address: Same as Parent Address";
+      else if (gAddrChoice === 'residence') gAddrText = "Address: Same as Current Residence (Address 1)";
+      else gAddrText = `Address: ${document.getElementById('guardianCustomAddr').value.trim() || 'Custom'}`;
+
+      if (gName && gPhone) {
+        document.getElementById('cardCitizenGuardian').innerText = `${gName} (${gRelation}) (+91 ${gPhone})`;
+        document.getElementById('cardCitizenGuardianAddr').innerText = gAddrText;
+      } else {
+        document.getElementById('cardCitizenGuardian').innerText = "Not specified";
+        document.getElementById('cardCitizenGuardianAddr').innerText = "-";
+      }
+
+      switchStage(4);
+    }
+
+    function restartEverything() {
+      location.reload();
+    }
+  </script>
+</body>
+</html>
